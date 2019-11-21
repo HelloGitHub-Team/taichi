@@ -18,7 +18,7 @@
     "lint:prettier": "check-prettier lint",
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
     "prettier": "prettier -c --write \"**/*\"",
-    "start": "cross-env UMI_UI=none umi dev",
+    "start": "umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev"
   },
   "husky": {

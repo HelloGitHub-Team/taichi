@@ -29,7 +29,7 @@ const routes: IRoute[] = [
             path: '/admin',
             name: 'admin',
             icon: 'crown',
-            component: './Admin',
+            component: './test/Admin',
             // authority: ['admin'],
           },
           {

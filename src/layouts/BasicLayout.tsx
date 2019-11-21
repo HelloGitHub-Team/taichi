@@ -31,6 +31,7 @@ const noMatch = (
     }
   />
 );
+
 export interface BasicLayoutProps extends ProLayoutProps {
   breadcrumbNameMap: {
     [path: string]: MenuDataItem;
@@ -41,6 +42,7 @@ export interface BasicLayoutProps extends ProLayoutProps {
   settings: Settings;
   dispatch: Dispatch;
 }
+
 export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
   breadcrumbNameMap: {
     [path: string]: MenuDataItem;
