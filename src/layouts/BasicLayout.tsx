@@ -1,5 +1,5 @@
 /**
- * Ant Design Pro v4 use `@ant-design/pro-layout` to handle Layout.
+ * Tai Chi v4 use `@ant-design/pro-layout` to handle Layout.
  * You can view component api by:
  * https://github.com/ant-design/ant-design-pro-layout
  */
@@ -17,12 +17,12 @@ import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
 import { getAuthorityFromRouter } from '@/utils/helper';
-import logo from '../assets/svgs/logo.svg';
+import logo from '../assets/images/logo.png';
 
 const noMatch = (
   <Result
     status="403"
-    title="403"
+    title="4034"
     subTitle="Sorry, you are not authorized to access this page."
     extra={
       <Button type="primary">
