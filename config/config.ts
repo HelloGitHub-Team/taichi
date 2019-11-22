@@ -97,8 +97,6 @@ export default {
           .split('/')
           .map((a: string) => a.replace(/([A-Z])/g, '-$1'))
           .map((a: string) => a.toLowerCase());
-        // console.log('antdProPath', antdProPath);
-        // console.log('arr', arr);
         return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-');
       }
 
