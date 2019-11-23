@@ -26,13 +26,6 @@ const routes: IRoute[] = [
             component: './test/Welcome',
           },
           {
-            path: '/admin',
-            name: 'admin',
-            icon: 'crown',
-            component: './Admin',
-            // authority: ['admin'],
-          },
-          {
             component: './user/404',
           },
         ],
