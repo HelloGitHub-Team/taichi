@@ -83,7 +83,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   /**
    * constructor
    */
-
   useEffect(() => {
     if (dispatch) {
       dispatch({

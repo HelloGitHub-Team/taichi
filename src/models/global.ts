@@ -1,13 +1,5 @@
 import { Reducer } from 'redux';
 
-import { NoticeIconData } from '@/components/NoticeIcon';
-
-export interface NoticeItem extends NoticeIconData {
-  id: string;
-  type: string;
-  status: string;
-}
-
 export interface GlobalModelState {
   collapsed: boolean;
 }

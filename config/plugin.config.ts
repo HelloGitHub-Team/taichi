@@ -4,8 +4,9 @@
 import ThemeColorReplacer from 'webpack-theme-color-replacer';
 import generate from '@ant-design/colors/lib/generate';
 import path from 'path';
+import defaultSettings from './defaultSettings';
 
-function getModulePackageName (module: { context: string }) {
+function getModulePackageName(module: { context: string }) {
   if (!module.context) return null;
 
   const nodeModulesPath = path.join(__dirname, '../node_modules/');
@@ -25,17 +26,13 @@ function getModulePackageName (module: { context: string }) {
 }
 
 export default (config: any) => {
-  // preview.pro.ant.design only do not use in your production;
-  if (
-    process.env.ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site' ||
-    process.env.NODE_ENV !== 'production'
-  ) {
+  if (process.env.NODE_ENV !== 'production') {
     config.plugin('webpack-theme-color-replacer').use(ThemeColorReplacer, [
       {
         fileName: 'css/theme-colors-[contenthash:8].css',
-        matchColors: getAntdSerials('#1890ff'), // 主色系列
+        matchColors: getAntdSerials(defaultSettings.primaryColor), // 主色系列
         // 改变样式选择器，解决样式覆盖问题
-        changeSelector (selector: string): string {
+        changeSelector(selector: string): string {
           switch (selector) {
             case '.ant-calendar-today .ant-calendar-date':
               return ':not(.ant-calendar-selected-date)' + selector;
@@ -54,7 +51,7 @@ export default (config: any) => {
 
   // optimize chunks
   config.optimization
-  // share the same chunks across different modules
+    // share the same chunks across different modules
     .runtimeChunk(false)
     .splitChunks({
       chunks: 'async',
@@ -77,7 +74,7 @@ export default (config: any) => {
             }
             return false;
           },
-          name (module: { context: string }) {
+          name(module: { context: string }) {
             const packageName = getModulePackageName(module);
             if (packageName) {
               if (['bizcharts', '@antv_data-set'].indexOf(packageName) >= 0) {

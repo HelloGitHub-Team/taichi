@@ -7,7 +7,7 @@ HG 可视化前端项目
 项目使用`ant-design-pro`进行搭建，技术栈如下：  
 `react + typescript + dva + umi + CSS module`
 
-参与开发的步骤如下：
+参与开发：
 
 ```shell script
 # 克隆代码
@@ -26,7 +26,7 @@ yarn start
 
 > **Tips**:服务端字段说明会在响应中以`#`出现
 
-响应状态通过 HTTP status code 反应，规则如下：
+响应状态通过 `HTTP status code` 反映，规则如下：
 
 - 200：成功
 - 400：参数错误
