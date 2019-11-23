@@ -1,6 +1,5 @@
 import { IConfig, IPlugin } from 'umi-types';
 import defaultSettings from './defaultSettings'; // https://umijs.org/config/
-
 import slash from 'slash2';
 import webpackPlugin from './plugin.config';
 import routes from './router.config';
@@ -32,29 +31,16 @@ const plugins: IPlugin[] = [
       // default close dll, because issue https://github.com/ant-design/ant-design-pro/issues/4665
       // dll features https://webpack.js.org/plugins/dll-plugin/
       dll: {
-        include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
+        // include: Object.keys(pkg.dependencies),
+        // include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
         exclude: ['@babel/runtime', 'netlify-lambda'],
       },
-    },
-  ],
-  [
-    'umi-plugin-pro-block',
-    {
-      moveMock: false,
-      moveService: false,
-      modifyRequest: true,
-      autoAddMenu: true,
     },
   ],
 ];
 
 export default {
   plugins,
-  block: {
-    // 国内用户可以使用码云
-    // defaultGitUrl: 'https://gitee.com/ant-design/pro-blocks',
-    defaultGitUrl: 'https://github.com/ant-design/pro-blocks',
-  },
   hash: true,
   targets: {
     ie: 11,
@@ -105,6 +91,7 @@ export default {
     basePath: '/',
   },
   chainWebpack: webpackPlugin,
+  treeShaking: true,
   /*
   proxy: {
     '/server/api/': {

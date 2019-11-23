@@ -20,6 +20,11 @@ yarn install
 yarn start
 ```
 
+> **Tips :**
+>
+> - 启动时[去掉了`umi ui`可视化编程辅助工具](https://github.com/ant-design/ant-design-pro/issues/5411)
+> - 开启了`DllPlugin`打包优化，如果启动[发现问题](https://github.com/ant-design/ant-design-pro/issues/4665)可以关闭
+
 ## 接口
 
 ### 响应约定

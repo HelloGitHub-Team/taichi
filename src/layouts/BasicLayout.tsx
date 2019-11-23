@@ -96,7 +96,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   /**
    * init variables
    */
-
+  console.log('settings', settings);
   const handleMenuCollapse = (payload: boolean): void => {
     if (dispatch) {
       dispatch({

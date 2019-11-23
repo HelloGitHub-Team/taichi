@@ -28,7 +28,10 @@ ul,
 ol {
   list-style: none;
 }
-
+// FIXME: 设置fixedHeader:true后样式不知道为什么权重比较低
+.ant-layout .ant-pro-fixed-header.ant-layout-header {
+  position: fixed;
+}
 @media (max-width: @screen-xs) {
   .ant-table {
     width: 100%;
