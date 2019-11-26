@@ -6,7 +6,6 @@
 import ProLayout, {
   BasicLayoutProps as ProLayoutProps,
   MenuDataItem,
-  Settings,
 } from '@ant-design/pro-layout';
 import React, { useEffect } from 'react';
 import Link from 'umi/link';
@@ -18,6 +17,7 @@ import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
 import { getAuthorityFromRouter } from '@/utils/helper';
 import logo from '../assets/images/logo.png';
+import defaultSettings from '../../config/defaultSettings';
 
 const noMatch = (
   <Result
@@ -39,7 +39,6 @@ export interface BasicLayoutProps extends ProLayoutProps {
   route: ProLayoutProps['route'] & {
     authority: string[];
   };
-  settings: Settings;
   dispatch: Dispatch;
 }
 
@@ -75,7 +74,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   const {
     dispatch,
     children,
-    settings,
     location = {
       pathname: '/',
     },
@@ -88,15 +86,11 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       dispatch({
         type: 'user/fetchCurrent',
       });
-      dispatch({
-        type: 'settings/getSetting',
-      });
     }
   }, []);
   /**
    * init variables
    */
-  console.log('settings', settings);
   const handleMenuCollapse = (payload: boolean): void => {
     if (dispatch) {
       dispatch({
@@ -139,7 +133,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       menuDataRender={menuDataRender}
       rightContentRender={rightProps => <RightContent {...rightProps} />}
       {...props}
-      {...settings}
+      {...defaultSettings}
     >
       <Authorized authority={authorized!.authority} noMatch={noMatch}>
         {children}
@@ -148,7 +142,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   );
 };
 
-export default connect(({ global, settings }: ConnectState) => ({
+export default connect(({ global }: ConnectState) => ({
   collapsed: global.collapsed,
-  settings,
 }))(BasicLayout);

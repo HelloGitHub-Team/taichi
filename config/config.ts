@@ -22,9 +22,11 @@ const plugins: IPlugin[] = [
       },
       pwa: pwa
         ? {
+            manifestOptions: 'public/manifest.json',
             workboxPluginMode: 'InjectManifest',
             workboxOptions: {
               importWorkboxFrom: 'local',
+              swSrc: 'public/service-worker.js',
             },
           }
         : false,

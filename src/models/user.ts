@@ -13,7 +13,7 @@ export interface CurrentUser {
     key: string;
     label: string;
   }[];
-  userid?: string;
+  userId?: string;
   unreadCount?: number;
 }
 

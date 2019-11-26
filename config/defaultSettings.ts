@@ -54,7 +54,7 @@ export default {
   menu: {
     locale: false,
   },
-  title: 'Tai chi',
+  title: 'Tai Chi',
   pwa: false,
   iconfontUrl: '',
 } as DefaultSettings;

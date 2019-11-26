@@ -3,7 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 /* globals workbox */
 workbox.core.setCacheNameDetails({
-  prefix: 'antd-pro',
+  prefix: 'Tai Chi',
   suffix: 'v1',
 });
 // Control all opened tabs ASAP
