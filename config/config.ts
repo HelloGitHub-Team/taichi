@@ -3,6 +3,7 @@ import defaultSettings from './defaultSettings'; // https://umijs.org/config/
 import slash from 'slash2';
 import webpackPlugin from './plugin.config';
 import routes from './router.config';
+import pkg from '../package.json';
 
 const { pwa, primaryColor } = defaultSettings; // preview.pro.ant.design only do not use in your production ;
 
@@ -22,16 +23,18 @@ const plugins: IPlugin[] = [
       },
       pwa: pwa
         ? {
+            manifestOptions: 'public/manifest.json',
             workboxPluginMode: 'InjectManifest',
             workboxOptions: {
               importWorkboxFrom: 'local',
+              swSrc: 'public/service-worker.js',
             },
           }
         : false,
       // default close dll, because issue https://github.com/ant-design/ant-design-pro/issues/4665
       // dll features https://webpack.js.org/plugins/dll-plugin/
       dll: {
-        // include: Object.keys(pkg.dependencies),
+        include: Object.keys(pkg.dependencies),
         // include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
         exclude: ['@babel/runtime', 'netlify-lambda'],
       },

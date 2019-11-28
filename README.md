@@ -1,4 +1,4 @@
-# tai chi
+# Tai Chi
 
 HG 可视化前端项目
 
