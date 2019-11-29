@@ -1,6 +1,6 @@
-import { AxiosRequestConfig } from 'axios';
 import { Action, RequestReducer, State, XXX } from '@/http/requestTypes';
 import { useReducer } from 'react';
+import { AxiosRequestConfig } from 'axios';
 import request from '@/http/axiosConfig';
 
 const requestReducer: RequestReducer = (state: XXX, action: Action) => {
@@ -31,22 +31,26 @@ const requestReducer: RequestReducer = (state: XXX, action: Action) => {
       };
   }
 };
-const useRequest = (url: string, options: AxiosRequestConfig) => {
+const useRequest = (options: AxiosRequestConfig) => {
   const initialState: State = {
     response: null,
     error: null,
     loading: false,
   };
   const [state, dispatch] = useReducer(requestReducer, initialState);
-  dispatch({ type: 'pending' });
-  request(url, options).then(
-    response => {
-      dispatch({ type: 'success', response });
-    },
-    error => {
-      dispatch({ type: 'error', error });
-    },
-  );
-  return { ...state };
+  const fetch = (config?: AxiosRequestConfig) => {
+    dispatch({ type: 'pending' });
+    return request({ ...options, ...config }).then(
+      response => {
+        dispatch({ type: 'success', response });
+        return response;
+      },
+      error => {
+        dispatch({ type: 'error', error });
+        return Promise.reject(error);
+      },
+    );
+  };
+  return { ...state, fetch };
 };
 export default useRequest;

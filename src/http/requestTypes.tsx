@@ -33,3 +33,7 @@ export interface State {
 export interface RequestReducer {
   (state: XXX, action: Action): State;
 }
+export interface ResponseData {
+  payload: any;
+  message: string;
+}

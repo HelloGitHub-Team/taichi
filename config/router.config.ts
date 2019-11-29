@@ -26,6 +26,12 @@ const routes: IRoute[] = [
             component: './test/Welcome',
           },
           {
+            path: '/exampleTable',
+            name: 'exampleTable',
+            icon: 'smile',
+            component: './test/ExampleTable',
+          },
+          {
             component: './user/404',
           },
         ],
