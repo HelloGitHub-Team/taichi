@@ -26,7 +26,7 @@ export type Action =
   | { type: 'error'; error: any };
 
 export interface State {
-  response: any;
+  response: null | ResponseData;
   error: any;
   loading: boolean;
 }

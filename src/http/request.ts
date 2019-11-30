@@ -38,9 +38,9 @@ const useRequest = (options: AxiosRequestConfig) => {
     loading: false,
   };
   const [state, dispatch] = useReducer(requestReducer, initialState);
-  const fetch = (config?: AxiosRequestConfig) => {
+  const fetch = (url: string, config?: AxiosRequestConfig) => {
     dispatch({ type: 'pending' });
-    return request({ ...options, ...config }).then(
+    return request(url, { ...options, ...config }).then(
       response => {
         dispatch({ type: 'success', response });
         return response;

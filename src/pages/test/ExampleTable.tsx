@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
-import { fetchTest } from '@/services/testRequest';
+import React, { useEffect, useState } from 'react';
 import { Card, Table } from 'antd';
+import { fetchTest } from '@/services/testRequest';
 import useRequest from '@/http/request';
+import request from '@/http/axiosConfig';
 
 const columns = [
   {
@@ -22,17 +23,18 @@ const columns = [
 ];
 
 const ExampleTable = () => {
-  // const [dataSource, setDataSource] = useState([]);
-  // useEffect(() => {
-  //   fetchTest().then(
-  //     (response: any) => {
-  //       setDataSource(response.payload);
-  //     },
-  //     error => {
-  //       console.log('error', error);
-  //     },
-  //   );
-  // }, []);
+  const [dataSource1, setDataSource1] = useState([]);
+  useEffect(() => {
+    request(fetchTest).then(
+      response => {
+        setDataSource1(response.payload);
+      },
+      error => {
+        console.log('error', error);
+      },
+    );
+  }, []);
+  console.log(dataSource1);
   const { response, loading, fetch } = useRequest({ url: fetchTest });
   const dataSource = response ? response.payload : [];
   useEffect(() => {
