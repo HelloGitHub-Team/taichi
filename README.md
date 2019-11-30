@@ -51,7 +51,7 @@ yarn start
 
 ### 前端发起请求
 
-#### 在`services`中定义请求的相关配置项和参数类型：
+#### 1. 在`services`中定义请求的相关配置项和参数类型：
 
 ```typescript
 export interface TestParams {
@@ -63,7 +63,7 @@ export interface TestParams {
 export const fetchTest: AxiosRequestConfig = { url: '/api/test/success', method: 'post' };
 ```
 
-#### 组件中使用：
+#### 2. 在组件中使用：
 
 ```typescript
 const ExampleTable = () => {
@@ -96,7 +96,7 @@ const ExampleTable = () => {
 };
 ```
 
-#### 通过自定义`Hooks`使用：
+#### 3. 通过自定义`Hooks`使用：
 
 ```typescript
 const ExampleTable = () => {
