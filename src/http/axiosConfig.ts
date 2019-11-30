@@ -43,7 +43,7 @@ axiosInstance.interceptors.response.use(
   },
 );
 
-const request = (url: string, config?: AxiosRequestConfig) =>
-  axiosInstance(url, config).then((response: AxiosResponse<ResponseData>) => response.data);
+const request = (config: AxiosRequestConfig = {}) =>
+  axiosInstance(config).then((response: AxiosResponse<ResponseData>) => response.data);
 
 export default request;

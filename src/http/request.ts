@@ -31,7 +31,7 @@ const requestReducer: RequestReducer = (state: XXX, action: Action) => {
       };
   }
 };
-const useRequest = (url: string, options?: AxiosRequestConfig) => {
+const useRequest = (options?: AxiosRequestConfig) => {
   const initialState: State = {
     response: null,
     error: null,
@@ -40,7 +40,7 @@ const useRequest = (url: string, options?: AxiosRequestConfig) => {
   const [state, dispatch] = useReducer(requestReducer, initialState);
   const fetch = (config?: AxiosRequestConfig) => {
     dispatch({ type: 'pending' });
-    return request(url, { ...options, ...config }).then(
+    return request({ ...options, ...config }).then(
       response => {
         dispatch({ type: 'success', response });
         return response;
