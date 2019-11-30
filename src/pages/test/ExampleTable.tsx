@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Table } from 'antd';
 import { fetchTest } from '@/services/testRequest';
-import useRequest from '@/http/request';
 import request from '@/http/axiosConfig';
+import useRequest from '@/http/request';
 
 const columns = [
   {
@@ -21,11 +21,22 @@ const columns = [
     key: 'address',
   },
 ];
-
+interface TestParams {
+  userName: string;
+  password: string;
+  mobile: string;
+  captcha: string;
+}
 const ExampleTable = () => {
   const [dataSource1, setDataSource1] = useState([]);
+  const params: TestParams = {
+    userName: 'userName',
+    password: 'password',
+    mobile: 'mobile',
+    captcha: 'captcha',
+  };
   useEffect(() => {
-    request(fetchTest).then(
+    request(fetchTest, { params, method: 'get' }).then(
       response => {
         setDataSource1(response.payload);
       },
@@ -35,10 +46,10 @@ const ExampleTable = () => {
     );
   }, []);
   console.log(dataSource1);
-  const { response, loading, fetch } = useRequest({ url: fetchTest });
+  const { response, loading, fetch } = useRequest(fetchTest, { method: 'post' });
   const dataSource = response ? response.payload : [];
   useEffect(() => {
-    fetch().then();
+    fetch({ params }).then();
   }, []);
   return (
     <Card>

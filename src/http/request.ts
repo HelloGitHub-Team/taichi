@@ -31,14 +31,14 @@ const requestReducer: RequestReducer = (state: XXX, action: Action) => {
       };
   }
 };
-const useRequest = (options: AxiosRequestConfig) => {
+const useRequest = (url: string, options?: AxiosRequestConfig) => {
   const initialState: State = {
     response: null,
     error: null,
     loading: false,
   };
   const [state, dispatch] = useReducer(requestReducer, initialState);
-  const fetch = (url: string, config?: AxiosRequestConfig) => {
+  const fetch = (config?: AxiosRequestConfig) => {
     dispatch({ type: 'pending' });
     return request(url, { ...options, ...config }).then(
       response => {
