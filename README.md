@@ -48,3 +48,73 @@ yarn start
   "payload": [] # 请求返回的数据
 }
 ```
+
+### 前端发起请求
+
+#### 1. 在`services`中定义请求的相关配置项和参数类型：
+
+```typescript
+export interface TestParams {
+  userName: string;
+  password: string;
+  mobile: string;
+  captcha: string;
+}
+export const fetchTest: AxiosRequestConfig = { url: '/api/test/success', method: 'post' };
+```
+
+#### 2. 在组件中使用：
+
+```typescript
+const ExampleTable = () => {
+  const [dataSource, setDataSource] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const params: TestParams = {
+    userName: 'userName',
+    password: 'password',
+    mobile: 'mobile',
+    captcha: 'captcha',
+  };
+  useEffect(() => {
+    setLoading(true);
+    request({ ...fetchTest, params }).then(
+      response => {
+        setLoading(false);
+        setDataSource(response.payload);
+      },
+      error => {
+        setLoading(false);
+        console.log('error', error);
+      },
+    );
+  }, []);
+  return (
+    <Card>
+      <Table loading={loading} dataSource={dataSource} columns={columns} />
+    </Card>
+  );
+};
+```
+
+#### 3. 通过自定义`Hooks`使用：
+
+```typescript
+const ExampleTable = () => {
+  const params: TestParams = {
+    userName: 'userName',
+    password: 'password',
+    mobile: 'mobile',
+    captcha: 'captcha',
+  };
+  const { response, loading, fetch } = useRequest({ ...fetchTest, params });
+  const dataSource = response ? response.payload : [];
+  useEffect(() => {
+    fetch({ params }).then();
+  }, []);
+  return (
+    <Card>
+      <Table loading={loading} dataSource={dataSource} columns={columns} />
+    </Card>
+  );
+};
+```
