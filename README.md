@@ -53,23 +53,30 @@ yarn start
 
 #### 1. 在`services`中定义请求的相关配置项和参数类型：
 
+根据接口文档提前在`services`中定义好接口请求的相应配置项，可以在开发时专心书写业务逻辑
+
 ```typescript
+import { AxiosRequestConfig } from 'axios';
+
 export interface TestParams {
   userName: string;
   password: string;
   mobile: string;
   captcha: string;
 }
+
 export const fetchTest: AxiosRequestConfig = { url: '/api/test/success', method: 'post' };
 ```
 
 #### 2. 在组件中使用：
 
+在使用`request`的时候会通过泛型来约束请求时的参数
+
 ```typescript
 const ExampleTable = () => {
   const [dataSource, setDataSource] = useState([]);
   const [loading, setLoading] = useState(false);
-  const params: TestParams = {
+  const params = {
     userName: 'userName',
     password: 'password',
     mobile: 'mobile',
@@ -77,10 +84,10 @@ const ExampleTable = () => {
   };
   useEffect(() => {
     setLoading(true);
-    request({ ...fetchTest, params }).then(
+    request<TestParams>({ ...fetchTest, params }).then(
       response => {
         setLoading(false);
-        setDataSource(response.payload);
+        setDataSource1(response.payload);
       },
       error => {
         setLoading(false);
@@ -98,18 +105,20 @@ const ExampleTable = () => {
 
 #### 3. 通过自定义`Hooks`使用：
 
+自定义`hooks`会帮我们自动处理请求的加载`loading`,也支持传递泛型参数来约束请求参数类型
+
 ```typescript
 const ExampleTable = () => {
-  const params: TestParams = {
+  const params = {
     userName: 'userName',
     password: 'password',
     mobile: 'mobile',
     captcha: 'captcha',
   };
-  const { response, loading, fetch } = useRequest({ ...fetchTest, params });
+  const { response, loading, fetch } = useRequest<TestParams>({ ...fetchTest, params });
   const dataSource = response ? response.payload : [];
   useEffect(() => {
-    fetch({ params }).then();
+    fetch().then();
   }, []);
   return (
     <Card>

@@ -40,7 +40,7 @@ const ExampleTable = () => {
       },
     );
   }, []);
-  const { response, loading, fetch } = useRequest({ ...fetchTest, params });
+  const { response, loading, fetch } = useRequest<TestParams>({ ...fetchTest, params });
   const dataSource = response ? response.payload : [];
   useEffect(() => {
     fetch().then();
