@@ -41,7 +41,6 @@ const plugins: IPlugin[] = [
     },
   ],
 ];
-
 export default {
   plugins,
   hash: true,
@@ -55,7 +54,10 @@ export default {
   theme: {
     'primary-color': primaryColor,
   },
-  define: {},
+  define: {
+    // @see:https://github.com/umijs/umi/issues/1142
+    'process.env.MOCK': process.env.MOCK !== 'none',
+  },
   ignoreMomentLocale: true,
   lessLoaderOptions: {
     javascriptEnabled: true,

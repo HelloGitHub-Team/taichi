@@ -20,7 +20,11 @@ const codeMessage: CodeMessage = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
-const axiosInstance = axios.create({ timeout: 10000, baseURL: 'http://localhost:3000' });
+const { MOCK } = process.env;
+const axiosInstance = axios.create({
+  timeout: 10000,
+  baseURL: MOCK ? '' : 'http://localhost:3000',
+});
 axiosInstance.interceptors.request.use(
   config => config,
   error => {
