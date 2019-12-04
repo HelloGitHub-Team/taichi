@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios';
+
 export interface CodeMessage {
   200: string;
   201: string;
@@ -16,10 +18,6 @@ export interface CodeMessage {
   504: string;
 }
 
-export interface XXX {
-  data?: any;
-  error?: any;
-}
 export type Action =
   | { type: 'pending' }
   | { type: 'success'; response: any }
@@ -31,9 +29,14 @@ export interface State {
   loading: boolean;
 }
 export interface RequestReducer {
-  (state: XXX, action: Action): State;
+  (state: State, action: Action): State;
 }
 export interface ResponseData {
   payload: any;
   message: string;
+}
+
+export interface RequestConfig<T = any> extends AxiosRequestConfig {
+  params?: T;
+  data?: T;
 }

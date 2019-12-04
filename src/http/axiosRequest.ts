@@ -1,6 +1,6 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { message } from 'antd';
-import { CodeMessage, ResponseData } from '@/http/requestTypes';
+import { CodeMessage, RequestConfig, ResponseData } from '@/http/requestTypes';
 
 const STATUS_OK = 200;
 const codeMessage: CodeMessage = {
@@ -42,10 +42,7 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-interface RequestConfig<T = any> extends AxiosRequestConfig {
-  prams?: T;
-  data?: T;
-}
+
 const request = <T>(config: RequestConfig<T> = {}) =>
   axiosInstance(config).then((response: AxiosResponse<ResponseData>) => response.data);
 

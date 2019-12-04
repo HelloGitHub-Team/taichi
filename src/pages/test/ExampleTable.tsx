@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Table } from 'antd';
 import { fetchTest, TestParams } from '@/services/testRequest';
-import request from '@/http/axiosConfig';
-import useRequest from '@/http/request';
+import request from '@/http/axiosRequest';
+import useRequest from '@/http/requestHooks';
 
 const columns = [
   {
@@ -43,7 +43,7 @@ const ExampleTable = () => {
   const { response, loading, fetch } = useRequest({ ...fetchTest, params });
   const dataSource = response ? response.payload : [];
   useEffect(() => {
-    fetch({ params }).then();
+    fetch().then();
   }, []);
   return (
     <Card>

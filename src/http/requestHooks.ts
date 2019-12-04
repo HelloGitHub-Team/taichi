@@ -1,9 +1,8 @@
-import { Action, RequestReducer, State, XXX } from '@/http/requestTypes';
+import { RequestConfig, RequestReducer, State } from '@/http/requestTypes';
 import { useReducer } from 'react';
-import { AxiosRequestConfig } from 'axios';
-import request from '@/http/axiosConfig';
+import request from '@/http/axiosRequest';
 
-const requestReducer: RequestReducer = (state: XXX, action: Action) => {
+const requestReducer: RequestReducer = (state, action) => {
   switch (action.type) {
     case 'pending':
       return {
@@ -31,14 +30,14 @@ const requestReducer: RequestReducer = (state: XXX, action: Action) => {
       };
   }
 };
-const useRequest = (options?: AxiosRequestConfig) => {
+const useRequest = <T>(options?: RequestConfig<T>) => {
   const initialState: State = {
     response: null,
     error: null,
     loading: false,
   };
   const [state, dispatch] = useReducer(requestReducer, initialState);
-  const fetch = (config?: AxiosRequestConfig) => {
+  const fetch = <T>(config?: RequestConfig<T>) => {
     dispatch({ type: 'pending' });
     return request({ ...options, ...config }).then(
       response => {

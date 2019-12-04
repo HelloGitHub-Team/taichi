@@ -1,11 +1,5 @@
 import React from 'react';
 
-const Login = () => {
-  return (
-    <div>
-      登录
-    </div>
-  );
-};
+const Login = () => <div>登录</div>;
 
 export default Login;
