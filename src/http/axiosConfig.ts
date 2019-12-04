@@ -42,8 +42,11 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
-const request = (config: AxiosRequestConfig = {}) =>
+interface RequestConfig<T = any> extends AxiosRequestConfig {
+  prams?: T;
+  data?: T;
+}
+const request = <T>(config: RequestConfig<T> = {}) =>
   axiosInstance(config).then((response: AxiosResponse<ResponseData>) => response.data);
 
 export default request;

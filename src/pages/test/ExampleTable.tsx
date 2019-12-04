@@ -24,14 +24,14 @@ const columns = [
 
 const ExampleTable = () => {
   const [, setDataSource1] = useState([]);
-  const params: TestParams = {
+  const params = {
     userName: 'userName',
     password: 'password',
     mobile: 'mobile',
     captcha: 'captcha',
   };
   useEffect(() => {
-    request({ ...fetchTest, params }).then(
+    request<TestParams>({ ...fetchTest, params }).then(
       response => {
         setDataSource1(response.payload);
       },

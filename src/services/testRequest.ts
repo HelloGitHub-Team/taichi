@@ -6,4 +6,5 @@ export interface TestParams {
   mobile: string;
   captcha: string;
 }
+
 export const fetchTest: AxiosRequestConfig = { url: '/api/test/success', method: 'post' };
