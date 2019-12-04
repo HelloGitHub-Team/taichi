@@ -49,6 +49,8 @@ yarn start
 }
 ```
 
+接口文档:[传送门](https://gitlab.com/521xueweihan/HelloGitHub.com/blob/master/doc/%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3.md)
+
 ### 发起请求
 
 #### 1. 在`services`中定义请求的相关配置项和参数类型：
