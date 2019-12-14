@@ -11,26 +11,10 @@ import React, { useEffect } from 'react';
 import Link from 'umi/link';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
-import { Button, Result } from 'antd';
-import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
-import { getAuthorityFromRouter } from '@/utils/helper';
 import logo from '../assets/images/logo.png';
 import defaultSettings from '../../config/defaultSettings';
-
-const noMatch = (
-  <Result
-    status="403"
-    title="4034"
-    subTitle="Sorry, you are not authorized to access this page."
-    extra={
-      <Button type="primary">
-        <Link to="/login">Go Login</Link>
-      </Button>
-    }
-  />
-);
 
 export interface BasicLayoutProps extends ProLayoutProps {
   breadcrumbNameMap: {
@@ -52,10 +36,7 @@ export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
  */
 
 const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
-  menuList.map(item => {
-    const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
-    return Authorized.check(item.authority, localItem, null) as MenuDataItem;
-  });
+  menuList.map(item => ({ ...item, children: item.children ? menuDataRender(item.children) : [] }));
 
 const footerRender: BasicLayoutProps['footerRender'] = () => (
   <>
@@ -71,13 +52,7 @@ const footerRender: BasicLayoutProps['footerRender'] = () => (
 );
 
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
-  const {
-    dispatch,
-    children,
-    location = {
-      pathname: '/',
-    },
-  } = props;
+  const { dispatch, children } = props;
   /**
    * constructor
    */
@@ -98,10 +73,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
         payload,
       });
     }
-  }; // get children authority
-
-  const authorized = getAuthorityFromRouter(props.route.routes, location.pathname || '/') || {
-    authority: undefined,
   };
   return (
     <ProLayout
@@ -135,9 +106,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       {...props}
       {...defaultSettings}
     >
-      <Authorized authority={authorized!.authority} noMatch={noMatch}>
-        {children}
-      </Authorized>
+      {children}
     </ProLayout>
   );
 };

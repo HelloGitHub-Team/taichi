@@ -8,33 +8,24 @@ const routes: IRoute[] = [
   },
   {
     path: '/',
-    component: '../layouts/SecurityLayout',
+    component: '../layouts/BasicLayout',
+    authority: ['user'],
     routes: [
       {
         path: '/',
-        component: '../layouts/BasicLayout',
-        authority: ['admin', 'user'],
-        routes: [
-          {
-            path: '/',
-            redirect: '/welcome',
-          },
-          {
-            path: '/welcome',
-            name: 'welcome',
-            icon: 'smile',
-            component: './test/Welcome',
-          },
-          {
-            path: '/exampleTable',
-            name: 'exampleTable',
-            icon: 'smile',
-            component: './test/ExampleTable',
-          },
-          {
-            component: './user/404',
-          },
-        ],
+        redirect: '/welcome',
+      },
+      {
+        path: '/welcome',
+        name: 'welcome',
+        icon: 'smile',
+        component: './test/Welcome',
+      },
+      {
+        path: '/exampleTable',
+        name: 'exampleTable',
+        icon: 'smile',
+        component: './test/ExampleTable',
       },
       {
         component: './user/404',
