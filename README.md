@@ -25,6 +25,66 @@ yarn start
 > - 启动时[去掉了`umi ui`可视化编程辅助工具](https://github.com/ant-design/ant-design-pro/issues/5411)
 > - 开启了`DllPlugin`打包优化，如果启动[发现问题](https://github.com/ant-design/ant-design-pro/issues/4665)可以关闭
 
+## 项目目录结构
+
+```text
+├── LICENSE
+├── README.md
+├── config                          # uim 及项目配置目录
+│   ├── config.ts                   # umi 配置文件
+│   ├── defaultSettings.ts          # 项目布局等默认配置
+│   ├── plugin.config.ts            # umi webpack插件配置
+│   └── router.config.ts            # umi 项目路由配置文件
+├── jsconfig.json                   # js 配置文件与tsconfig.json类似
+├── mock                            # umi 接口数据mock目录
+│   ├── notices.ts
+│   ├── route.ts
+│   └── user.ts
+├── package.json                    # npm 相关配置文件
+├── public
+│   ├── favicon.png                 # 网站图标
+│   ├── manifest.json               # PWA 映射文件
+│   └── service-worker.js           # serviceWorker
+├── src
+│   ├── assets                      # 本地静态资源
+│   │   ├── images                  # 图片
+│   │   └── styles                  # 全局通用样式
+│   ├── components                  # 业务通用组件
+│   │   ├── GlobalHeader
+│   │   ├── HeaderDropdown
+│   │   ├── HeaderSearch
+│   │   └── PageLoading
+│   ├── global.less                 # 全局样式
+│   ├── global.tsx                  # 全局 ts
+│   ├── http                        # 请求相关
+│   │   ├── axiosRequest.ts         # axios 实例封装
+│   │   ├── requestHooks.ts         # 请求自定义 hooks
+│   │   └── requestTypes.tsx        # 请求相关类型变量
+│   ├── layouts                     # 通用布局
+│   │   ├── BasicLayout.tsx         # 基础布局
+│   │   ├── BlankLayout.tsx         # 空白布局
+│   │   └── SecurityLayout.tsx      # 安全布局(校验登录状态)
+│   ├── models                      # 全局 dva model
+│   │   ├── connect.d.ts
+│   │   ├── global.ts
+│   │   ├── login.ts
+│   │   └── user.ts
+│   ├── pages                       # 业务页面
+│   │   ├── document.ejs            # HTML 模板
+│   │   ├── test
+│   │   └── user
+│   ├── services                    # 后台接口配置目录
+│   │   ├── login.ts
+│   │   └── user.ts
+│   ├── types                       # 自定义类型声明文件
+│   │   └── typings.d.ts
+│   └── utils                       # 项目工具库
+│       └── helper.ts
+├── tsconfig.json                   # ts 配置文件
+└── yarn.lock                       # yarn 锁定依赖版本文件
+
+```
+
 ## 接口
 
 ### 响应约定
