@@ -181,7 +181,6 @@ function genData() {
   }
 }
 const data = genData();
-console.log(data);
 const options: EChartOption = {
   title: { text: '统计来源', subtext: '纯属虚构' },
   tooltip: {
