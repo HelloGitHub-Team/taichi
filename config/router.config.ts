@@ -13,19 +13,9 @@ const routes: IRoute[] = [
     routes: [
       {
         path: '/',
-        redirect: '/welcome',
-      },
-      {
-        path: '/welcome',
-        name: 'welcome',
+        name: '分析',
         icon: 'smile',
-        component: './test/Welcome',
-      },
-      {
-        path: '/exampleTable',
-        name: 'exampleTable',
-        icon: 'smile',
-        component: './test/ExampleTable',
+        component: './dashboard/Analysis',
       },
       {
         component: './user/404',

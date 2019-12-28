@@ -7,11 +7,10 @@ import ProLayout, {
   BasicLayoutProps as ProLayoutProps,
   MenuDataItem,
 } from '@ant-design/pro-layout';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'umi/link';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
-import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
 import logo from '../assets/images/logo.png';
 import defaultSettings from '../../config/defaultSettings';
@@ -46,23 +45,13 @@ const footerRender: BasicLayoutProps['footerRender'] = () => (
         textAlign: 'center',
       }}
     >
-      I am footer
+      分享 GitHub 上 有趣、入门级的开源项目
     </div>
   </>
 );
 
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
   const { dispatch, children } = props;
-  /**
-   * constructor
-   */
-  useEffect(() => {
-    if (dispatch) {
-      dispatch({
-        type: 'user/fetchCurrent',
-      });
-    }
-  }, []);
   /**
    * init variables
    */
@@ -102,7 +91,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       }}
       footerRender={footerRender}
       menuDataRender={menuDataRender}
-      rightContentRender={() => <RightContent />}
+      // rightContentRender={() => <RightContent/>}
       {...props}
       {...defaultSettings}
     >

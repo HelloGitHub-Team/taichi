@@ -23,7 +23,7 @@ const codeMessage: CodeMessage = {
 const { MOCK } = process.env;
 const axiosInstance = axios.create({
   timeout: 10000,
-  baseURL: MOCK ? '' : 'http://localhost:3000',
+  baseURL: MOCK ? '' : 'https://hellogithub.com',
 });
 axiosInstance.interceptors.request.use(
   config => config,
