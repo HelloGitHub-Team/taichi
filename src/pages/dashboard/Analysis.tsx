@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import echarts from 'echarts';
-import { Card } from 'antd';
+import { Card, Col, Row } from 'antd';
 import ChartWrapper from '@/components/ChartWrapper/ChartWrapper';
 
 import EChartOption = echarts.EChartOption;
@@ -181,44 +181,58 @@ function genData() {
   }
 }
 const data = genData();
-const Analysis = () => {
-  const options: EChartOption = {
-    title: { text: '统计来源', subtext: '纯属虚构' },
-    tooltip: {
-      trigger: 'item',
-      formatter: '{a} <br/>{b} : {c} ({d}%)',
-    },
-    legend: {
-      type: 'scroll',
-      orient: 'vertical',
-      right: 10,
-      top: 20,
-      bottom: 20,
-      data: data.legendData,
-      selected: data.selected,
-    },
-    series: [
-      {
-        name: '姓名',
-        type: 'pie',
-        radius: '55%',
-        center: ['40%', '50%'],
-        data: data.seriesData,
-        itemStyle: {
-          emphasis: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
-          },
+console.log(data);
+const options: EChartOption = {
+  title: { text: '统计来源', subtext: '纯属虚构' },
+  tooltip: {
+    trigger: 'item',
+    formatter: '{a} <br/>{b} : {c} ({d}%)',
+  },
+  legend: {
+    type: 'scroll',
+    orient: 'vertical',
+    right: 10,
+    top: 20,
+    bottom: 20,
+    data: data.legendData,
+    selected: data.selected,
+  },
+  series: [
+    {
+      name: '姓名',
+      type: 'pie',
+      radius: '55%',
+      center: ['40%', '50%'],
+      data: data.seriesData,
+      itemStyle: {
+        emphasis: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: 'rgba(0, 0, 0, 0.5)',
         },
       },
-    ],
-  };
+    },
+  ],
+};
+const Analysis = () => {
+  const [loading, setLoading] = useState(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 6000);
   return (
     <PageHeaderWrapper>
-      <Card bordered={false}>
-        <ChartWrapper height="400px" width="100%" options={options} />
-      </Card>
+      <Row gutter={24}>
+        <Col span={12}>
+          <Card bordered={false}>
+            <ChartWrapper loading={loading} height="400px" width="100%" options={options} />
+          </Card>
+        </Col>
+        <Col span={12}>
+          <Card bordered={false}>
+            <ChartWrapper loading={loading} height="400px" width="100%" options={options} />
+          </Card>
+        </Col>
+      </Row>
     </PageHeaderWrapper>
   );
 };
