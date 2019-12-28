@@ -13,9 +13,9 @@ const routes: IRoute[] = [
     routes: [
       {
         path: '/',
-        name: '分析',
-        icon: 'smile',
-        component: './dashboard/Analysis',
+        name: '统计',
+        icon: 'area-chart',
+        component: './dashboard/Statistics',
       },
       {
         component: './user/404',

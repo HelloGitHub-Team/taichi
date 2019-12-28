@@ -214,7 +214,7 @@ const options: EChartOption = {
     },
   ],
 };
-const Analysis = () => {
+const Statistics = () => {
   const [loading, setLoading] = useState(true);
   setTimeout(() => {
     setLoading(false);
@@ -237,4 +237,4 @@ const Analysis = () => {
   );
 };
 
-export default Analysis;
+export default Statistics;
