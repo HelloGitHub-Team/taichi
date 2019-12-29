@@ -46,6 +46,7 @@
     "classnames": "^2.2.6",
     "dva": "^2.4.1",
     "echarts": "^4.5.0",
+    "json-to-ts": "^1.6.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "path-to-regexp": "^3.1.0",
@@ -57,7 +58,6 @@
     "slash2": "^2.0.0",
     "umi": "^2.9.6",
     "umi-plugin-react": "^1.10.1",
-    "umi-request": "^1.2.7",
     "webpack-theme-color-replacer": "^1.2.15"
   },
   "devDependencies": {

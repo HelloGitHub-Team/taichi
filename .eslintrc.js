@@ -3,5 +3,7 @@ module.exports = {
   globals: {
     page: true,
   },
-  rules: {},
+  rules: {
+    'no-param-reassign': ['error', { props: false }],
+  },
 };

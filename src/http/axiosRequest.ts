@@ -20,13 +20,19 @@ const codeMessage: CodeMessage = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
-const { MOCK } = process.env;
+const { MOCK, NODE_ENV } = process.env;
 const axiosInstance = axios.create({
   timeout: 10000,
   baseURL: MOCK ? '' : 'https://hellogithub.com',
 });
 axiosInstance.interceptors.request.use(
-  config => config,
+  config => {
+    // 开发环境下通过头部信息请求接口
+    if (NODE_ENV === 'development') {
+      config.headers['X-HG-TOKEN'] = 'B3jdAmOJJ4JHDxeiSttSOvLkf/6IIjhK';
+    }
+    return config;
+  },
   error => {
     message.error('请求异常');
     return Promise.reject(error);
@@ -47,7 +53,7 @@ axiosInstance.interceptors.response.use(
   },
 );
 
-const request = <T>(config: RequestConfig<T> = {}) =>
-  axiosInstance(config).then((response: AxiosResponse<ResponseData>) => response.data);
+const request = <Req, Res = any>(config: RequestConfig<Req> = {}) =>
+  axiosInstance(config).then((response: AxiosResponse<ResponseData<Res>>) => response.data);
 
 export default request;

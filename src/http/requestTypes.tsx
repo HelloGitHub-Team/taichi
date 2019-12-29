@@ -31,8 +31,8 @@ export interface State {
 export interface RequestReducer {
   (state: State, action: Action): State;
 }
-export interface ResponseData {
-  payload: any;
+export interface ResponseData<Res = any> {
+  payload: Res;
   message: string;
 }
 
