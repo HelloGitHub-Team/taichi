@@ -38,8 +38,6 @@ export interface Datum2 {
 export interface FromView {
   all_count: number;
   data: Datum[];
-
-  [key: string]: any;
 }
 
 export interface Datum {
@@ -61,7 +59,7 @@ const fromViewOptions = (fromView: FromView | {}) => {
     }));
   }
   return {
-    title: { text: '统计来源', subtext: '纯属虚构' },
+    title: { text: '统计来源' },
     tooltip: {
       trigger: 'item',
       formatter: '{a} <br/>{b} : {c} ({d}%)',
