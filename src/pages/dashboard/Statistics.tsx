@@ -20,7 +20,7 @@ const Statistics = () => {
   const [fromView, setFromView] = useState<FromView | {}>({});
   const [repoView, setRepoView] = useState<RepoView | {}>({});
   const [volumeView, setVolumeView] = useState<VolumeView | {}>({});
-  useEffect(() => {
+  const fetchHomeData = () => {
     setLoading(true);
     request<IHomeViewParams, RootObject>(fetchHomeView).then(
       response => {
@@ -33,6 +33,9 @@ const Statistics = () => {
         setLoading(false);
       },
     );
+  };
+  useEffect(() => {
+    fetchHomeData();
   }, []);
   return (
     <PageHeaderWrapper className={styles.statistics}>
