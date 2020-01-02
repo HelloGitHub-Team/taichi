@@ -5,9 +5,10 @@ import styles from './Statistics.less';
 import ChartWrapper from '@/components/ChartWrapper/ChartWrapper';
 import {
   FromView,
-  fromViewOptions,
-  options2,
   options3,
+  processFromViewOptions,
+  processRepoViewOptions,
+  RepoView,
   RootObject,
 } from '@/pages/dashboard/echartsOptions';
 import { fetchHomeView, IHomeViewParams } from '@/services/Statistics';
@@ -16,7 +17,7 @@ import request from '@/http/axiosRequest';
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
   const [fromView, setFromView] = useState<FromView | {}>({});
-  // const [repoView, setRepoView] = useState({});
+  const [repoView, setRepoView] = useState<RepoView | {}>({});
   // const [volumeView, setVolumeView] = useState({});
   useEffect(() => {
     setLoading(true);
@@ -24,7 +25,7 @@ const Statistics = () => {
       response => {
         setLoading(false);
         setFromView(response.payload.from_view);
-        // setRepoView(response.payload.repo_view);
+        setRepoView(response.payload.repo_view);
         // setVolumeView(response.payload.volume_view);
       },
       () => {
@@ -39,11 +40,16 @@ const Statistics = () => {
           loading={loading}
           height="400px"
           width="100%"
-          options={fromViewOptions(fromView)}
+          options={processFromViewOptions(fromView)}
         />
       </Card>
       <Card className={styles.card} bordered={false}>
-        <ChartWrapper loading={loading} height="400px" width="100%" options={options2} />
+        <ChartWrapper
+          loading={loading}
+          height="400px"
+          width="100%"
+          options={processRepoViewOptions(repoView)}
+        />
       </Card>
       <Card className={styles.card} bordered={false}>
         <ChartWrapper loading={loading} height="400px" width="100%" options={options3} />

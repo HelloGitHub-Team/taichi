@@ -50,7 +50,7 @@ interface IData {
   name: string;
   value: number;
 }
-const fromViewOptions = (fromView: FromView | {}) => {
+const processFromViewOptions = (fromView: FromView | {}) => {
   let copyData: IData[] = [];
   if (!isEmptyObject(fromView)) {
     copyData = (fromView as FromView).data.map(item => ({
@@ -73,7 +73,7 @@ const fromViewOptions = (fromView: FromView | {}) => {
     },
     series: [
       {
-        name: '姓名',
+        name: '来源',
         type: 'pie',
         radius: '55%',
         center: ['40%', '50%'],
@@ -89,15 +89,65 @@ const fromViewOptions = (fromView: FromView | {}) => {
     ],
   };
 };
+const processRepoViewOptions = (repoView: RepoView | {}) => {
+  let counts: number[] = [];
+  let ipCounts: number[] = [];
+  let timestamps: number[] = [];
+  if (!isEmptyObject(repoView)) {
+    const repoViewData = (repoView as RepoView).data;
+    counts = repoViewData.map(data => data.count);
+    ipCounts = repoViewData.map(data => data.ip_count);
+    timestamps = repoViewData.map(data => data.timestamp);
+  }
+  return {
+    title: {
+      text: '推荐项目点击数据',
+    },
+    tooltip: {
+      trigger: 'axis',
+    },
+    legend: {
+      data: ['点击数量', 'IP数量'],
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true,
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: timestamps,
+    },
+    yAxis: {
+      type: 'value',
+    },
+    series: [
+      {
+        name: '点击数量',
+        type: 'line',
+        stack: '总量',
+        data: counts,
+      },
+      {
+        name: 'IP数量',
+        type: 'line',
+        stack: '总量',
+        data: ipCounts,
+      },
+    ],
+  };
+};
 const options2 = {
   title: {
-    text: '推荐项目',
+    text: '推荐项目点击数据',
   },
   tooltip: {
     trigger: 'axis',
   },
   legend: {
-    data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'],
+    data: ['点击数量', 'IP数量'],
   },
   grid: {
     left: '3%',
@@ -115,34 +165,16 @@ const options2 = {
   },
   series: [
     {
-      name: '邮件营销',
+      name: '点击数量',
       type: 'line',
       stack: '总量',
       data: [120, 132, 101, 134, 90, 230, 210],
     },
     {
-      name: '联盟广告',
+      name: 'IP数量',
       type: 'line',
       stack: '总量',
       data: [220, 182, 191, 234, 290, 330, 310],
-    },
-    {
-      name: '视频广告',
-      type: 'line',
-      stack: '总量',
-      data: [150, 232, 201, 154, 190, 330, 410],
-    },
-    {
-      name: '直接访问',
-      type: 'line',
-      stack: '总量',
-      data: [320, 332, 301, 334, 390, 330, 320],
-    },
-    {
-      name: '搜索引擎',
-      type: 'line',
-      stack: '总量',
-      data: [820, 932, 901, 934, 1290, 1330, 1320],
     },
   ],
 };
@@ -243,5 +275,4 @@ const options3 = {
     },
   ],
 };
-
-export { fromViewOptions, options2, options3 };
+export { processFromViewOptions, processRepoViewOptions, options2, options3 };
