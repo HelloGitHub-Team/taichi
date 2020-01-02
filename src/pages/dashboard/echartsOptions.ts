@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { isEmptyObject } from '@/utils/helper';
 
 export interface RootObject {
@@ -92,12 +93,14 @@ const processFromViewOptions = (fromView: FromView | {}) => {
 const processRepoViewOptions = (repoView: RepoView | {}) => {
   let counts: number[] = [];
   let ipCounts: number[] = [];
-  let timestamps: number[] = [];
+  let timestamps: string[] = [];
   if (!isEmptyObject(repoView)) {
     const repoViewData = (repoView as RepoView).data;
     counts = repoViewData.map(data => data.count);
     ipCounts = repoViewData.map(data => data.ip_count);
-    timestamps = repoViewData.map(data => data.timestamp);
+    timestamps = repoViewData.map(data =>
+      moment(data.timestamp * 1000).format('YYYY年MM月DD日 HH:mm'),
+    );
   }
   return {
     title: {
