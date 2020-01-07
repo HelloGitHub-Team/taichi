@@ -44,6 +44,8 @@ const plugins: IPlugin[] = [
 export default {
   plugins,
   hash: true,
+  base: '/dist/',
+  publicPath: '/dist/',
   targets: {
     ie: 11,
   },
@@ -93,7 +95,7 @@ export default {
     },
   },
   manifest: {
-    basePath: '/dist/',
+    basePath: '/',
   },
   chainWebpack: webpackPlugin,
   treeShaking: true,
