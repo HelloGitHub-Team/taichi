@@ -93,7 +93,7 @@ export default {
     },
   },
   manifest: {
-    basePath: '/',
+    basePath: '/dist/',
   },
   chainWebpack: webpackPlugin,
   treeShaking: true,
