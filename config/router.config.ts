@@ -2,14 +2,8 @@ import { IRoute } from 'umi-types';
 
 const routes: IRoute[] = [
   {
-    name: 'login',
-    path: '/login',
-    component: './user/login',
-  },
-  {
     path: '/',
     component: '../layouts/BasicLayout',
-    authority: ['user'],
     routes: [
       {
         path: '/',

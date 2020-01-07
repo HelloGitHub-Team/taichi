@@ -40,28 +40,13 @@ const Statistics = () => {
   return (
     <PageHeaderWrapper className={styles.statistics}>
       <Card className={styles.card} bordered={false}>
-        <ChartWrapper
-          loading={loading}
-          height="400px"
-          width="100%"
-          options={processFromViewOptions(fromView)}
-        />
+        <ChartWrapper loading={loading} height="400px" options={processFromViewOptions(fromView)} />
       </Card>
       <Card className={styles.card} bordered={false}>
-        <ChartWrapper
-          loading={loading}
-          height="400px"
-          width="100%"
-          options={processRepoViewOptions(repoView)}
-        />
+        <ChartWrapper loading={loading} height="400px" options={processRepoViewOptions(repoView)} />
       </Card>
       <Card className={styles.card} bordered={false}>
-        <ChartWrapper
-          loading={loading}
-          height="400px"
-          width="100%"
-          options={processVolumeView(volumeView)}
-        />
+        <ChartWrapper loading={loading} height="400px" options={processVolumeView(volumeView)} />
       </Card>
     </PageHeaderWrapper>
   );

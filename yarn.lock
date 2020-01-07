@@ -63,23 +63,27 @@
     umi-utils "^1.5.1"
     yargs-parser "^15.0.0"
 
-"@ant-design/pro-layout@^4.5.16":
-  version "4.7.4"
-  resolved "https://registry.npm.taobao.org/@ant-design/pro-layout/download/@ant-design/pro-layout-4.7.4.tgz#c56e32efa5d97c97d253b08b3a50e12958705e9d"
-  integrity sha1-xW4y76XZfJfSU7CLOlDhKVhwXp0=
+"@ant-design/pro-layout@4.9.11":
+  version "4.9.11"
+  resolved "https://registry.npm.taobao.org/@ant-design/pro-layout/download/@ant-design/pro-layout-4.9.11.tgz?cache=0&sync_timestamp=1578306943856&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40ant-design%2Fpro-layout%2Fdownload%2F%40ant-design%2Fpro-layout-4.9.11.tgz#05a1adb985eebd59fe00f81d9242cc8e3efda86a"
+  integrity sha1-BaGtuYXuvVn+APgdkkLMjj79qGo=
   dependencies:
     antd "^3.23.6"
     classnames "^2.2.6"
+    hash.js "^1.1.7"
     history "^4.10.1"
     lodash "^4.17.10"
     memoize-one "^5.1.1"
     omit.js "^1.0.0"
     path-to-regexp "2.4.0"
     qs "^6.9.0"
+    rc-resize-observer "^0.1.3"
     react-copy-to-clipboard "^5.0.1"
     react-helmet "^5.2.1"
     react-responsive "^8.0.1"
     react-router-dom "5.1.2"
+    unstated-next "^1.1.0"
+    use-merge-value "^1.0.1"
     warning "^4.0.3"
 
 "@babel/code-frame@7.0.0":
@@ -7501,7 +7505,7 @@ hash-base@^3.0.0:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-hash.js@^1.0.0, hash.js@^1.0.3:
+hash.js@^1.0.0, hash.js@^1.0.3, hash.js@^1.1.7:
   version "1.1.7"
   resolved "https://registry.npm.taobao.org/hash.js/download/hash.js-1.1.7.tgz#0babca538e8d4ee4a0f8988d68866537a003cf42"
   integrity sha1-C6vKU46NTuSg+JiNaIZlN6ADz0I=
@@ -8475,7 +8479,7 @@ is-interactive@^1.0.0:
 
 is-mobile@2.1.0:
   version "2.1.0"
-  resolved "https://registry.npm.taobao.org/is-mobile/download/is-mobile-2.1.0.tgz#4c0cab72f3358dd9986007389b30729fae80da0b"
+  resolved "https://registry.npm.taobao.org/is-mobile/download/is-mobile-2.1.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fis-mobile%2Fdownload%2Fis-mobile-2.1.0.tgz#4c0cab72f3358dd9986007389b30729fae80da0b"
   integrity sha1-TAyrcvM1jdmYYAc4mzByn66A2gs=
 
 is-npm@^3.0.0:
@@ -10030,9 +10034,9 @@ marked@0.6.2:
   integrity sha1-xXS+i1Rai0hkFFbKHb4ON7bczBo=
 
 matchmediaquery@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.npm.taobao.org/matchmediaquery/download/matchmediaquery-0.3.0.tgz#6f672bcdbc44de16825c6917fbcdcfb9b82607b1"
-  integrity sha1-b2crzbxE3haCXGkX+83PubgmB7E=
+  version "0.3.1"
+  resolved "https://registry.npm.taobao.org/matchmediaquery/download/matchmediaquery-0.3.1.tgz#8247edc47e499ebb7c58f62a9ff9ccf5b815c6d7"
+  integrity sha1-gkftxH5Jnrt8WPYqn/nM9bgVxtc=
   dependencies:
     css-mediaquery "^0.1.2"
 
@@ -12817,7 +12821,7 @@ rc-rate@~2.5.0:
     rc-util "^4.3.0"
     react-lifecycles-compat "^3.0.4"
 
-rc-resize-observer@^0.1.0:
+rc-resize-observer@^0.1.0, rc-resize-observer@^0.1.3:
   version "0.1.3"
   resolved "https://registry.npm.taobao.org/rc-resize-observer/download/rc-resize-observer-0.1.3.tgz#097191f9c3ab186ed907b553ba6ef565df11c249"
   integrity sha1-CXGR+cOrGG7ZB7VTum71Zd8Rwkk=
@@ -13093,7 +13097,7 @@ react-dev-utils@9.0.1:
 
 react-dom@^16.8.6:
   version "16.12.0"
-  resolved "https://registry.npm.taobao.org/react-dom/download/react-dom-16.12.0.tgz?cache=0&sync_timestamp=1574324697527&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-dom%2Fdownload%2Freact-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
+  resolved "https://registry.npm.taobao.org/react-dom/download/react-dom-16.12.0.tgz?cache=0&sync_timestamp=1576681172997&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-dom%2Fdownload%2Freact-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
   integrity sha1-DaS3FLjRPCA4yTlrVKkrrqYz/hE=
   dependencies:
     loose-envify "^1.1.0"
@@ -13310,7 +13314,7 @@ react-tween-state@^0.1.5:
 
 react@^16.8.6:
   version "16.12.0"
-  resolved "https://registry.npm.taobao.org/react/download/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
+  resolved "https://registry.npm.taobao.org/react/download/react-16.12.0.tgz?cache=0&sync_timestamp=1576681172403&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact%2Fdownload%2Freact-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
   integrity sha1-DAqcahQkKeNhSDTVp3jhiqeKC4M=
   dependencies:
     loose-envify "^1.1.0"
@@ -14375,10 +14379,15 @@ shallow-clone@^0.1.2:
     lazy-cache "^0.2.3"
     mixin-object "^2.0.1"
 
-shallow-equal@^1.0.0, shallow-equal@^1.1.0:
+shallow-equal@^1.0.0:
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/shallow-equal/download/shallow-equal-1.2.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fshallow-equal%2Fdownload%2Fshallow-equal-1.2.0.tgz#fd828d2029ff4e19569db7e19e535e94e2d1f5cc"
   integrity sha1-/YKNICn/ThlWnbfhnlNelOLR9cw=
+
+shallow-equal@^1.1.0:
+  version "1.2.1"
+  resolved "https://registry.npm.taobao.org/shallow-equal/download/shallow-equal-1.2.1.tgz#4c16abfa56043aa20d050324efa68940b0da79da"
+  integrity sha1-TBar+lYEOqINBQMk76aJQLDaedo=
 
 shallowequal@^1.0.1, shallowequal@^1.0.2, shallowequal@^1.1.0:
   version "1.1.0"
@@ -16477,6 +16486,11 @@ unset-value@^1.0.0:
     has-value "^0.3.1"
     isobject "^3.0.0"
 
+unstated-next@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/unstated-next/download/unstated-next-1.1.0.tgz#7bb4911a12fdf3cc8ad3eb11a0b315e4a8685ea8"
+  integrity sha1-e7SRGhL988yK0+sRoLMV5KhoXqg=
+
 untildify@^3.0.3:
   version "3.0.3"
   resolved "https://registry.npm.taobao.org/untildify/download/untildify-3.0.3.tgz#1e7b42b140bcfd922b22e70ca1265bfe3634c7c9"
@@ -16573,6 +16587,11 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-merge-value@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/use-merge-value/download/use-merge-value-1.0.1.tgz#51f27c34e381f98dc4a010e71cfb5862fedde26b"
+  integrity sha1-UfJ8NOOB+Y3EoBDnHPtYYv7d4ms=
 
 use@^3.1.0:
   version "3.1.1"
