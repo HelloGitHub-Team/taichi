@@ -29,7 +29,7 @@ const Statistics = () => {
   const [activeDateText, setActiveDateText] = useState('yesterday');
   const fetchHomeData = (params: IHomeViewParams) => {
     setLoading(true);
-    request<IHomeViewParams, RootObject>({ ...fetchHomeView, ...params }).then(
+    request<IHomeViewParams, RootObject>({ ...fetchHomeView, params }).then(
       response => {
         setLoading(false);
         setFromView(response.payload.from_view);
