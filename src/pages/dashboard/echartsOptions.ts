@@ -77,7 +77,7 @@ const processFromViewOptions = (fromView: FromView | {}) => {
         name: '来源',
         type: 'pie',
         radius: '55%',
-        center: ['40%', '50%'],
+        center: ['45%', '50%'],
         data: copyData,
         itemStyle: {
           emphasis: {
@@ -108,6 +108,11 @@ const processRepoViewOptions = (repoView: RepoView | {}) => {
     },
     tooltip: {
       trigger: 'axis',
+      axisPointer: {
+        lineStyle: {
+          color: '#bfbfbf',
+        },
+      },
     },
     grid: {
       left: '3%',
@@ -119,9 +124,35 @@ const processRepoViewOptions = (repoView: RepoView | {}) => {
       type: 'category',
       boundaryGap: false,
       data: timestamps,
+      axisTick: {
+        show: false,
+      },
+      axisLine: {
+        lineStyle: {
+          color: '#bfbfbf',
+        },
+      },
+      axisLabel: {
+        show: false,
+      },
     },
     yAxis: {
       type: 'value',
+      axisTick: {
+        show: false,
+      },
+      axisLine: {
+        show: false,
+      },
+      splitLine: {
+        lineStyle: {
+          type: 'dashed',
+          color: '#ebebeb',
+        },
+      },
+      axisLabel: {
+        color: '#5b5b5b',
+      },
     },
     series: [
       {
@@ -129,12 +160,18 @@ const processRepoViewOptions = (repoView: RepoView | {}) => {
         type: 'line',
         stack: '总量',
         data: counts,
+        itemStyle: {
+          color: '#d48265',
+        },
       },
       {
         name: 'IP数量',
         type: 'line',
         stack: '总量',
         data: ipCounts,
+        itemStyle: {
+          color: '#749f83',
+        },
       },
     ],
   };
@@ -166,6 +203,10 @@ const processVolumeView = (volumeView: VolumeView | {}) => {
     },
     legend: {
       type: 'scroll',
+      orient: 'vertical',
+      right: 10,
+      top: 20,
+      bottom: 20,
     },
     grid: {
       left: '3%',
@@ -173,10 +214,37 @@ const processVolumeView = (volumeView: VolumeView | {}) => {
       bottom: '3%',
       containLabel: true,
     },
-    xAxis: [{ type: 'category' }],
+    xAxis: [
+      {
+        type: 'category',
+        axisLine: {
+          lineStyle: {
+            color: '#bfbfbf',
+          },
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+    ],
     yAxis: [
       {
         type: 'value',
+        axisTick: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          lineStyle: {
+            type: 'dashed',
+            color: '#ebebeb',
+          },
+        },
+        axisLabel: {
+          color: '#5b5b5b',
+        },
       },
     ],
     series: volumeViewData,
