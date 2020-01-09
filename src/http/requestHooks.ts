@@ -1,5 +1,5 @@
-import { RequestConfig, RequestReducer, State } from '@/http/requestTypes';
 import { useReducer } from 'react';
+import { RequestConfig, RequestReducer, State } from '@/http/requestTypes';
 import request from '@/http/axiosRequest';
 
 const requestReducer: RequestReducer = (state, action) => {
@@ -30,16 +30,16 @@ const requestReducer: RequestReducer = (state, action) => {
       };
   }
 };
-const useRequest = <T>(options?: RequestConfig<T>) => {
+const useRequest = <Req, Res>(options?: RequestConfig<Req>) => {
   const initialState: State = {
     response: null,
     error: null,
     loading: false,
   };
   const [state, dispatch] = useReducer(requestReducer, initialState);
-  const fetch = <T>(config?: RequestConfig<T>) => {
+  const fetch = (config?: RequestConfig<Req>) => {
     dispatch({ type: 'pending' });
-    return request({ ...options, ...config }).then(
+    return request<Req, Res>({ ...options, ...config }).then(
       response => {
         dispatch({ type: 'success', response });
         return response;

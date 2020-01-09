@@ -113,6 +113,18 @@ yarn start
 
 ### 发起请求
 
+在接口请求时，支持传入请求参数的类型、以及响应数据的类型，这样在开发时写好接口请求参数以及响应数据的类型，通过泛型传递过去，就可以很好的实现编辑器代码补全：
+
+```typescript
+// 分别设置请求参数泛型以及响应数据泛型
+const request = <Req, Res = any>(config: RequestConfig<Req> = {}) =>
+  axiosInstance(config).then((response: AxiosResponse<ResponseData<Res>>) => response.data);
+```
+
+由于书写接口响应的数据的类型比较耗费时间，我们可以使用社区提供的将`JSON`格式的数据转换为`TS`声明文件的开源库：[json-to-ts](https://github.com/MariusAlch/json-to-ts)。
+
+在使用了`json-to-ts`这个库之后，我们就可以利用`JSON`文件生成的`TypeScript`声明文件来为对应的元素添加类型，从而获得相比于`JavaScript`开发更好的代码提示。
+
 #### 1. 在`services`中定义请求的相关配置项和参数类型：
 
 根据接口文档提前在`services`中定义好接口请求的相应配置项，可以在开发时专心书写业务逻辑
@@ -132,7 +144,7 @@ export const fetchTest: AxiosRequestConfig = { url: '/api/test/success', method:
 
 #### 2. 在组件中使用：
 
-在使用`request`的时候会通过泛型来约束请求时的参数
+在使用`request`的时候会通过泛型来约束请求时的参数、接口响应数据
 
 ```typescript
 const ExampleTable = () => {
@@ -146,7 +158,7 @@ const ExampleTable = () => {
   };
   useEffect(() => {
     setLoading(true);
-    request<TestParams>({ ...fetchTest, params }).then(
+    request<ParamsType, ResponseDataType>({ ...fetchTest, params }).then(
       response => {
         setLoading(false);
         setDataSource1(response.payload);
@@ -167,7 +179,7 @@ const ExampleTable = () => {
 
 #### 3. 通过自定义`Hooks`使用：
 
-自定义`hooks`会帮我们自动处理请求的加载`loading`,也支持传递泛型参数来约束请求参数类型
+自定义`hooks`会帮我们自动处理请求的加载`loading`,也支持传递泛型参数来约束请求参数和接口响应数据类型
 
 ```typescript
 const ExampleTable = () => {
@@ -177,7 +189,10 @@ const ExampleTable = () => {
     mobile: 'mobile',
     captcha: 'captcha',
   };
-  const { response, loading, fetch } = useRequest<TestParams>({ ...fetchTest, params });
+  const { response, loading, fetch } = useRequest<ParamsType, ResponseDataType>({
+    ...fetchTest,
+    params,
+  });
   const dataSource = response ? response.payload : [];
   useEffect(() => {
     fetch().then();
