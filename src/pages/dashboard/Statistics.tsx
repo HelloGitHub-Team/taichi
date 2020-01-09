@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { Card } from 'antd';
+import { Card, DatePicker } from 'antd';
+import cls from 'classnames';
+import { RangePickerValue } from 'antd/lib/date-picker/interface';
+import moment from 'moment';
 import styles from './Statistics.less';
 import ChartWrapper from '@/components/ChartWrapper/ChartWrapper';
 import {
@@ -15,14 +18,45 @@ import {
 import { fetchHomeView, IHomeViewParams } from '@/services/Statistics';
 import request from '@/http/axiosRequest';
 
+interface IDayItem {
+  text: string;
+  date: moment.Moment;
+}
+interface IDateTextMap {
+  today: IDayItem;
+  yesterday: IDayItem;
+  nearlySevenDay: IDayItem;
+  nearlyOneMonth: IDayItem;
+}
+const DATE_TEXT_MAP: IDateTextMap = {
+  today: {
+    text: '今天',
+    date: moment(),
+  },
+  yesterday: {
+    text: '昨天',
+    date: moment().subtract(1, 'day'),
+  },
+  nearlySevenDay: {
+    text: '近7天',
+    date: moment().subtract(7, 'day'),
+  },
+  nearlyOneMonth: {
+    text: '近一个月',
+    date: moment().subtract(1, 'months'),
+  },
+};
+const { RangePicker } = DatePicker;
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
   const [fromView, setFromView] = useState<FromView | {}>({});
   const [repoView, setRepoView] = useState<RepoView | {}>({});
   const [volumeView, setVolumeView] = useState<VolumeView | {}>({});
-  const fetchHomeData = () => {
+  const [date, setDate] = useState<RangePickerValue>([moment().subtract(1, 'day'), moment()]);
+  const [activeDateText, setActiveDateText] = useState('yesterday');
+  const fetchHomeData = (params: IHomeViewParams) => {
     setLoading(true);
-    request<IHomeViewParams, RootObject>(fetchHomeView).then(
+    request<IHomeViewParams, RootObject>({ ...fetchHomeView, ...params }).then(
       response => {
         setLoading(false);
         setFromView(response.payload.from_view);
@@ -34,11 +68,53 @@ const Statistics = () => {
       },
     );
   };
+  const handleRangeDate = ([startTime, endTime]: RangePickerValue) => {
+    if (typeof startTime === 'undefined' || typeof endTime === 'undefined') {
+      return [];
+    }
+    const startStamps = startTime.set({ hour: 0, minute: 0 }).unix();
+    const endStamps = endTime.set({ hour: 23, minute: 59 }).unix();
+    return [startStamps, endStamps];
+  };
   useEffect(() => {
-    fetchHomeData();
+    const [startStamps, endStamps] = handleRangeDate(date);
+    fetchHomeData({ start_time: startStamps, end_time: endStamps });
   }, []);
+  const onClickDateText = (key: string) => {
+    setActiveDateText(key);
+    const currentDate = [DATE_TEXT_MAP[key].date, moment()];
+    const [startStamps, endStamps] = handleRangeDate(currentDate);
+    setDate(currentDate);
+    fetchHomeData({
+      start_time: startStamps,
+      end_time: endStamps,
+    });
+  };
+
+  const onChangeDate = ([startTime, endTime]: RangePickerValue) => {
+    const [startStamps, endStamps] = handleRangeDate([startTime, endTime] as RangePickerValue);
+    setActiveDateText('');
+    setDate([startTime, endTime] as RangePickerValue);
+    fetchHomeData({ start_time: startStamps, end_time: endStamps });
+  };
+  const mainSearch = (
+    <Fragment>
+      <div className={styles.searchTextWrapper}>
+        {Object.keys(DATE_TEXT_MAP).map(key => (
+          <a
+            className={cls(styles.searchText, { [styles.active]: activeDateText === key })}
+            onClick={() => onClickDateText(key)}
+            key={key}
+          >
+            {DATE_TEXT_MAP[key].text}
+          </a>
+        ))}
+      </div>
+      <RangePicker value={date} className={styles.rangeDatePicker} onChange={onChangeDate} />
+    </Fragment>
+  );
   return (
-    <PageHeaderWrapper className={styles.statistics}>
+    <PageHeaderWrapper className={styles.statistics} content={mainSearch}>
       <Card className={styles.card} bordered={false}>
         <ChartWrapper loading={loading} height="400px" options={processFromViewOptions(fromView)} />
       </Card>

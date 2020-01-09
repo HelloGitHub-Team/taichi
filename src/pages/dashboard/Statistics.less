@@ -1,5 +1,21 @@
 @import '~antd/lib/style/themes/default.less';
+@import '~@/assets/styles/_vars.less';
 .statistics {
+  .rangeDatePicker {
+    margin-left: @margin-lg;
+  }
+  .searchTextWrapper {
+    display: inline-block;
+  }
+  .searchText {
+    color: @text-color;
+    &.active {
+      color: @link-color;
+    }
+  }
+  .searchText + .searchText {
+    margin-left: @margin-lg;
+  }
   .card + .card {
     margin-top: @padding-lg;
   }

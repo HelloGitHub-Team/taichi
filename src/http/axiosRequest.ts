@@ -27,7 +27,7 @@ const axiosInstance = axios.create({
 });
 axiosInstance.interceptors.request.use(
   config => {
-    // 开发环境下通过头部信息请求接口
+    // 开发环境下通过头部信息请求接口;
     if (NODE_ENV === 'development') {
       config.headers['X-HG-TOKEN'] = 'B3jdAmOJJ4JHDxeiSttSOvLkf/6IIjhK';
     }
@@ -44,11 +44,15 @@ axiosInstance.interceptors.response.use(
     if (status === STATUS_OK) {
       return response;
     }
-    message.error(codeMessage[status]);
     return Promise.reject(response);
   },
   error => {
-    message.error('网络异常');
+    const { status } = error.response;
+    if (codeMessage[status]) {
+      message.error(codeMessage[status]);
+    } else {
+      message.error('网络异常');
+    }
     return Promise.reject(error);
   },
 );
