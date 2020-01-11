@@ -45,8 +45,8 @@ const Statistics = () => {
     if (typeof startTime === 'undefined' || typeof endTime === 'undefined') {
       return [];
     }
-    const startStamps = startTime.set({ hour: 0, minute: 0 }).unix();
-    const endStamps = endTime.set({ hour: 23, minute: 59 }).unix();
+    const startStamps = startTime.set({ hour: 0, minute: 0, second: 0 }).unix();
+    const endStamps = endTime.set({ hour: 23, minute: 59, second: 59 }).unix();
     return [startStamps, endStamps];
   };
   useEffect(() => {
