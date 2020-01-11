@@ -74,7 +74,6 @@ const processFromViewOptions = (fromView: FromView | {}) => {
     },
     series: [
       {
-        name: '来源',
         type: 'pie',
         radius: '55%',
         center: ['45%', '50%'],
@@ -210,7 +209,7 @@ const processVolumeView = (volumeView: VolumeView | {}) => {
     },
     grid: {
       left: '3%',
-      right: '4%',
+      right: 160,
       bottom: '3%',
       containLabel: true,
     },
