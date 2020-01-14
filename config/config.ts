@@ -49,8 +49,8 @@ const plugins: IPlugin[] = [
 export default {
   plugins,
   hash: true,
-  base: '/dist/',
-  publicPath: '/dist/',
+  base: '/taichi/',
+  publicPath: '/taichi/',
   targets: {
     ie: 11,
   },

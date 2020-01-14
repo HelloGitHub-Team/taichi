@@ -63,7 +63,7 @@ const processFromViewOptions = (fromView: FromView | {}) => {
     title: { text: '统计来源' },
     tooltip: {
       trigger: 'item',
-      formatter: '{a} <br/>{b} : {c} ({d}%)',
+      formatter: '{b} : {c} ({d}%)',
     },
     legend: {
       type: 'scroll',

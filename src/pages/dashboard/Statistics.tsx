@@ -4,6 +4,7 @@ import { Card, DatePicker } from 'antd';
 import cls from 'classnames';
 import { RangePickerValue } from 'antd/lib/date-picker/interface';
 import moment from 'moment';
+import { message } from 'antd/es';
 import styles from './Statistics.less';
 import ChartWrapper from '@/components/ChartWrapper/ChartWrapper';
 import {
@@ -46,7 +47,7 @@ const Statistics = () => {
       return [];
     }
     const startStamps = startTime.set({ hour: 0, minute: 0, second: 0 }).unix();
-    const endStamps = endTime.set({ hour: 23, minute: 59, second: 59 }).unix();
+    const endStamps = endTime.set({ hour: 0, minute: 0, second: 0 }).unix();
     return [startStamps, endStamps];
   };
   useEffect(() => {
@@ -66,10 +67,17 @@ const Statistics = () => {
 
   const onChangeDate = ([startTime, endTime]: RangePickerValue) => {
     const [startStamps, endStamps] = handleRangeDate([startTime, endTime] as RangePickerValue);
+    if (startStamps === endStamps) {
+      message.warning('请选择一个范围');
+      return;
+    }
     setActiveDateText('');
     setDate([startTime, endTime] as RangePickerValue);
     fetchHomeData({ start_time: startStamps, end_time: endStamps });
   };
+  function disabledDate(current: moment.Moment | undefined) {
+    return !current;
+  }
   const mainSearch = (
     <Fragment>
       <div className={styles.searchTextWrapper}>
@@ -83,7 +91,12 @@ const Statistics = () => {
           </a>
         ))}
       </div>
-      <RangePicker value={date} className={styles.rangeDatePicker} onChange={onChangeDate} />
+      <RangePicker
+        value={date}
+        className={styles.rangeDatePicker}
+        onChange={onChangeDate}
+        disabledDate={disabledDate}
+      />
     </Fragment>
   );
   return (
