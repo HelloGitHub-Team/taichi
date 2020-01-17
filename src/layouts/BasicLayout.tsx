@@ -15,6 +15,7 @@ import { ConnectState } from '@/models/connect';
 import logo from '../assets/images/logo.png';
 import defaultSettings from '../../config/defaultSettings';
 import RightContent from '@/components/GlobalHeader/RightContent';
+import router from 'umi/router';
 
 export interface BasicLayoutProps extends ProLayoutProps {
   breadcrumbNameMap: {
@@ -64,6 +65,10 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       });
     }
   };
+  const onMenuHeaderClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    router.push('/');
+  };
   return (
     <ProLayout
       logo={logo}
@@ -93,6 +98,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       footerRender={footerRender}
       menuDataRender={menuDataRender}
       rightContentRender={() => <RightContent />}
+      onMenuHeaderClick={onMenuHeaderClick}
       {...props}
       {...defaultSettings}
     >

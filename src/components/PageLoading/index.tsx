@@ -5,7 +5,7 @@ import { Spin } from 'antd';
 // https://umijs.org/plugin/umi-plugin-react.html#dynamicimport
 const PageLoading: React.FC = () => (
   <div style={{ paddingTop: 100, textAlign: 'center' }}>
-    <Spin size="large" />
+    <Spin size="large" tip="加载中..." />
   </div>
 );
 export default PageLoading;
