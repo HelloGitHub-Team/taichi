@@ -1,6 +1,5 @@
 import React from 'react';
-import Avatar from './AvatarDropdown';
-import HeaderSearch from '../HeaderSearch';
+import { Icon } from 'antd';
 import styles from './index.less';
 import defaultSettings from '../../../config/defaultSettings';
 
@@ -11,22 +10,19 @@ const GlobalHeaderRight: React.FC = () => {
   if (theme === 'dark' && layout === 'topmenu') {
     className = `${styles.right}  ${styles.dark}`;
   }
-
   return (
     <div className={className}>
-      <HeaderSearch
-        className={`${styles.action} ${styles.search}`}
-        placeholder="站内搜索"
-        defaultValue="Hello Github"
-        dataSource={['搜索提示一', '搜索提示二', '搜索提示三']}
-        // onSearch={value => {
-        //   console.log('input', value);
-        // }}
-        // onPressEnter={value => {
-        //   console.log('enter', value);
-        // }}
-      />
-      <Avatar />
+      <a
+        target="_blank"
+        href="https://hellogithub.com/profile/"
+        rel="noopener noreferrer"
+        className={styles.action}
+      >
+        <span>
+          <Icon type="profile" theme="twoTone" />
+          主站个人首页
+        </span>
+      </a>
     </div>
   );
 };

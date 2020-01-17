@@ -1,4 +1,5 @@
 @import '~antd/es/style/themes/default.less';
+@import '~@/assets/styles/_vars.less';
 
 @pro-header-hover-bg: rgba(0, 0, 0, 0.025);
 
@@ -17,7 +18,7 @@
 }
 
 .menu {
-  :global(.anticon) {
+  :global(.action) {
     margin-right: 8px;
   }
   :global(.ant-dropdown-menu-item) {
@@ -40,6 +41,7 @@
   float: right;
   height: 100%;
   margin-left: auto;
+  padding-right: 24px;
   overflow: hidden;
   .action {
     display: inline-block;
@@ -47,30 +49,18 @@
     padding: 0 12px;
     cursor: pointer;
     transition: all 0.3s;
-    > i {
+    > span {
       color: @text-color;
       vertical-align: middle;
+    }
+    i {
+      margin-right: @margin-xxs;
     }
     &:hover {
       background: @pro-header-hover-bg;
     }
     &:global(.opened) {
       background: @pro-header-hover-bg;
-    }
-  }
-  .search {
-    padding: 0 12px;
-    &:hover {
-      background: transparent;
-    }
-  }
-  .account {
-    .avatar {
-      margin: ~'calc((@{layout-header-height} - 24px) / 2)' 0;
-      margin-right: 8px;
-      color: @primary-color;
-      vertical-align: top;
-      background: rgba(255, 255, 255, 0.85);
     }
   }
 }

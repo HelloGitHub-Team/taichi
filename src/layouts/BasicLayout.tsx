@@ -14,6 +14,7 @@ import { connect } from 'dva';
 import { ConnectState } from '@/models/connect';
 import logo from '../assets/images/logo.png';
 import defaultSettings from '../../config/defaultSettings';
+import RightContent from '@/components/GlobalHeader/RightContent';
 
 export interface BasicLayoutProps extends ProLayoutProps {
   breadcrumbNameMap: {
@@ -91,7 +92,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       }}
       footerRender={footerRender}
       menuDataRender={menuDataRender}
-      // rightContentRender={() => <RightContent/>}
+      rightContentRender={() => <RightContent />}
       {...props}
       {...defaultSettings}
     >
