@@ -11,11 +11,11 @@ import React from 'react';
 import Link from 'umi/link';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
+import router from 'umi/router';
 import { ConnectState } from '@/models/connect';
 import logo from '../assets/images/logo.png';
 import defaultSettings from '../../config/defaultSettings';
 import RightContent from '@/components/GlobalHeader/RightContent';
-import router from 'umi/router';
 
 export interface BasicLayoutProps extends ProLayoutProps {
   breadcrumbNameMap: {
