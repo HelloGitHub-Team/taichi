@@ -75,9 +75,6 @@ const Statistics = () => {
     setDate([startTime, endTime] as RangePickerValue);
     fetchHomeData({ start_time: startStamps, end_time: endStamps });
   };
-  function disabledDate(current: moment.Moment | undefined) {
-    return !current;
-  }
   const mainSearch = (
     <Fragment>
       <div className={styles.searchTextWrapper}>
@@ -91,12 +88,7 @@ const Statistics = () => {
           </a>
         ))}
       </div>
-      <RangePicker
-        value={date}
-        className={styles.rangeDatePicker}
-        onChange={onChangeDate}
-        disabledDate={disabledDate}
-      />
+      <RangePicker value={date} className={styles.rangeDatePicker} onChange={onChangeDate} />
     </Fragment>
   );
   return (
