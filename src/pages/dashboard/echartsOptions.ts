@@ -1,5 +1,9 @@
 import moment from 'moment';
+import echarts from 'echarts';
 import { isEmptyObject } from '@/utils/helper';
+
+import EChartsResponsiveOption = echarts.EChartsResponsiveOption;
+import EChartOption = echarts.EChartOption;
 
 export interface RootObject {
   end_time: number;
@@ -47,11 +51,14 @@ export interface Datum {
   percent: number;
   referrer: string;
 }
+
 interface IData {
   name: string;
   value: number;
 }
-const processFromViewOptions = (fromView: FromView | {}) => {
+
+export type IEchartsOption = EChartOption | EChartsResponsiveOption;
+const processFromViewOptions = (fromView: FromView | {}): IEchartsOption => {
   let copyData: IData[] = [];
   if (!isEmptyObject(fromView)) {
     copyData = (fromView as FromView).data.map(item => ({
@@ -89,7 +96,7 @@ const processFromViewOptions = (fromView: FromView | {}) => {
     ],
   };
 };
-const processRepoViewOptions = (repoView: RepoView | {}) => {
+const processRepoViewOptions = (repoView: RepoView | {}): IEchartsOption => {
   let counts: number[] = [];
   let ipCounts: number[] = [];
   let timestamps: string[] = [];
@@ -175,12 +182,14 @@ const processRepoViewOptions = (repoView: RepoView | {}) => {
     ],
   };
 };
+
 interface IVolumeViewData {
   name: string;
   data: number[];
   type: string;
 }
-const processVolumeView = (volumeView: VolumeView | {}) => {
+
+const processVolumeView = (volumeView: VolumeView | {}): IEchartsOption => {
   let volumeViewData: IVolumeViewData[] = [];
   if (!isEmptyObject(volumeView)) {
     const volumeDataTemp = (volumeView as VolumeView).data;

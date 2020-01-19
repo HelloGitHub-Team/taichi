@@ -125,6 +125,8 @@ const request = <Req, Res = any>(config: RequestConfig<Req> = {}) =>
 
 由于书写接口响应的数据的类型比较耗费时间，我们可以使用社区提供的将`JSON`格式的数据转换为`TS`声明文件的开源库：[json-to-ts](https://github.com/MariusAlch/json-to-ts)。
 
+> 如果你是`vscode`用户，可以使用[JSON to TS](https://marketplace.visualstudio.com/items?itemName=MariusAlchimavicius.json-to-ts)
+
 在使用了`json-to-ts`这个库之后，我们就可以利用`JSON`文件生成的`TypeScript`声明文件来为对应的元素添加类型，从而获得相比于`JavaScript`开发更好的代码提示。
 
 #### 1. 在`services`中定义请求的相关配置项和参数类型：

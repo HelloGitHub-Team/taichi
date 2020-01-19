@@ -4,11 +4,11 @@ interface IDayItem {
   text: string;
   date: moment.Moment;
 }
-interface IDateTextMap {
-  yesterday: IDayItem;
-  nearlySevenDay: IDayItem;
-  nearlyOneMonth: IDayItem;
-}
+
+export type DayKey = 'yesterday' | 'nearlySevenDay' | 'nearlyOneMonth';
+type IDateTextMap = {
+  [key in DayKey]: IDayItem;
+};
 export const DATE_TEXT_MAP: IDateTextMap = {
   yesterday: {
     text: '昨天',
