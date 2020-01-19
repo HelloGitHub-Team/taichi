@@ -161,7 +161,7 @@ const ExampleTable = () => {
     request<ParamsType, ResponseDataType>({ ...fetchTest, params }).then(
       response => {
         setLoading(false);
-        setDataSource1(response.payload);
+        setDataSource(response.payload);
       },
       error => {
         setLoading(false);
@@ -189,11 +189,11 @@ const ExampleTable = () => {
     mobile: 'mobile',
     captcha: 'captcha',
   };
-  const { response, loading, fetch } = useRequest<ParamsType, ResponseDataType>({
+  const { response = { payload = [] }, loading, fetch } = useRequest<ParamsType, ResponseDataType>({
     ...fetchTest,
     params,
   });
-  const dataSource = response ? response.payload : [];
+  const dataSource = response.payload;
   useEffect(() => {
     fetch().then();
   }, []);
