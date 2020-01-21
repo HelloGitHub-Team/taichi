@@ -67,7 +67,6 @@ const processFromViewOptions = (fromView: FromView | {}): IEchartsOption => {
     }));
   }
   return {
-    title: { text: '统计来源' },
     tooltip: {
       trigger: 'item',
       formatter: '{b} : {c} ({d}%)',
@@ -109,9 +108,6 @@ const processRepoViewOptions = (repoView: RepoView | {}): IEchartsOption => {
     );
   }
   return {
-    title: {
-      text: '推荐项目点击数据',
-    },
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -200,9 +196,6 @@ const processVolumeView = (volumeView: VolumeView | {}): IEchartsOption => {
     }));
   }
   return {
-    title: {
-      text: '月刊',
-    },
     tooltip: {
       axisPointer: {
         // 坐标轴指示器，坐标轴触发有效
