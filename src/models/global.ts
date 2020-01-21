@@ -17,7 +17,7 @@ const GlobalModel: GlobalModelType = {
   namespace: 'global',
 
   state: {
-    collapsed: false,
+    collapsed: true,
   },
 
   effects: {},

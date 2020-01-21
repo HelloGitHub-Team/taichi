@@ -7,7 +7,7 @@ import ProLayout, {
   BasicLayoutProps as ProLayoutProps,
   MenuDataItem,
 } from '@ant-design/pro-layout';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'umi/link';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
@@ -53,7 +53,7 @@ const footerRender: BasicLayoutProps['footerRender'] = () => (
 );
 
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
-  const { dispatch, children } = props;
+  const { dispatch, children, collapsed } = props;
   /**
    * init variables
    */
@@ -65,6 +65,9 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       });
     }
   };
+  useEffect(() => {
+    handleMenuCollapse(true);
+  }, []);
   const onMenuHeaderClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     router.push('/');
@@ -72,6 +75,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   return (
     <ProLayout
       logo={logo}
+      collapsed={collapsed}
       onCollapse={handleMenuCollapse}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children) {
