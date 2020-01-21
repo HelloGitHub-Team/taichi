@@ -26,12 +26,6 @@ export interface BasicLayoutProps extends ProLayoutProps {
   };
   dispatch: Dispatch;
 }
-
-export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
-  breadcrumbNameMap: {
-    [path: string]: MenuDataItem;
-  };
-};
 /**
  * use Authorized check all menu item
  */
@@ -53,7 +47,7 @@ const footerRender: BasicLayoutProps['footerRender'] = () => (
 );
 
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
-  const { dispatch, children } = props;
+  const { dispatch, children, collapsed } = props;
   /**
    * init variables
    */
@@ -72,6 +66,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   return (
     <ProLayout
       logo={logo}
+      collapsed={collapsed}
       onCollapse={handleMenuCollapse}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (menuItemProps.isUrl || menuItemProps.children) {
@@ -95,6 +90,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
           <span>{route.breadcrumbName}</span>
         );
       }}
+      breakpoint={false}
       footerRender={footerRender}
       menuDataRender={menuDataRender}
       rightContentRender={() => <RightContent />}

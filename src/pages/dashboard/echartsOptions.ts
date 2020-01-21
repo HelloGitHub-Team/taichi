@@ -104,7 +104,7 @@ const processRepoViewOptions = (repoView: RepoView | {}): IEchartsOption => {
     counts = repoViewData.map(data => data.count);
     ipCounts = repoViewData.map(data => data.ip_count);
     timestamps = repoViewData.map(data =>
-      moment(data.timestamp * 1000).format('YYYY年MM月DD日 HH:mm'),
+      moment(data.timestamp * 1000).format('YYYY年 MM月DD日 HH:mm:ss'),
     );
   }
   return {
@@ -127,7 +127,7 @@ const processRepoViewOptions = (repoView: RepoView | {}): IEchartsOption => {
       boundaryGap: false,
       data: timestamps,
       axisTick: {
-        show: false,
+        show: true,
       },
       axisLine: {
         lineStyle: {
@@ -135,7 +135,12 @@ const processRepoViewOptions = (repoView: RepoView | {}): IEchartsOption => {
         },
       },
       axisLabel: {
-        show: false,
+        color: '#5b5b5b',
+        formatter: (value: string) => {
+          const [, month, time] = value.split(' ');
+          return `${month}\n${time}`;
+        },
+        lineHeight: 18,
       },
     },
     yAxis: {
