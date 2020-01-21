@@ -1,7 +1,6 @@
 import React from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { Card, Table } from 'antd';
-// @ts-ignore
 import styles from './Detail.less';
 
 const dataSource = [
@@ -38,7 +37,7 @@ const columns = [
 ];
 
 const Detail = () => (
-  <PageHeaderWrapper>
+  <PageHeaderWrapper className={styles.staticsDetail}>
     <Card className={styles.card} title="图表" bordered={false}>
       1234
     </Card>
