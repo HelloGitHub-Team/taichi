@@ -7,7 +7,7 @@ import ProLayout, {
   BasicLayoutProps as ProLayoutProps,
   MenuDataItem,
 } from '@ant-design/pro-layout';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'umi/link';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
@@ -26,12 +26,6 @@ export interface BasicLayoutProps extends ProLayoutProps {
   };
   dispatch: Dispatch;
 }
-
-export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
-  breadcrumbNameMap: {
-    [path: string]: MenuDataItem;
-  };
-};
 /**
  * use Authorized check all menu item
  */
@@ -65,9 +59,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       });
     }
   };
-  useEffect(() => {
-    handleMenuCollapse(true);
-  }, []);
   const onMenuHeaderClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     router.push('/');
@@ -99,6 +90,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
           <span>{route.breadcrumbName}</span>
         );
       }}
+      breakpoint={false}
       footerRender={footerRender}
       menuDataRender={menuDataRender}
       rightContentRender={() => <RightContent />}
