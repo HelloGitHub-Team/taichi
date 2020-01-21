@@ -17,7 +17,7 @@ import {
   RootObject,
   VolumeView,
 } from '@/pages/dashboard/echartsOptions';
-import { fetchHomeView, IHomeViewParams } from '@/services/Statistics';
+import { fetchHomeView, IHomeViewParams } from '@/services/statistics';
 import request from '@/http/axiosRequest';
 import { DATE_TEXT_MAP, DayKey } from '@/pages/dashboard/timeConfig';
 

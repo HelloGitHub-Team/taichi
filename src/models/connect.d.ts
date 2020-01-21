@@ -2,10 +2,8 @@ import { AnyAction } from 'redux';
 import { MenuDataItem } from '@ant-design/pro-layout';
 import { RouterTypes } from 'umi';
 import { GlobalModelState } from './global';
-import { UserModelState } from './user';
-import { LoginModelType } from './login';
 
-export { GlobalModelState, UserModelState };
+export { GlobalModelState };
 
 export interface Loading {
   global: boolean;
@@ -20,8 +18,6 @@ export interface Loading {
 export interface ConnectState {
   global: GlobalModelState;
   loading: Loading;
-  user: UserModelState;
-  login: LoginModelType;
 }
 
 export interface Route extends MenuDataItem {
