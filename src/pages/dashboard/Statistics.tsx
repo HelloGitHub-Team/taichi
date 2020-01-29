@@ -31,9 +31,9 @@ interface IOptionsWithKey {
 
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
-  const [fromView, setFromView] = useState<FromView | {}>({});
-  const [repoView, setRepoView] = useState<RepoView | {}>({});
-  const [volumeView, setVolumeView] = useState<VolumeView | {}>({});
+  const [fromView, setFromView] = useState<FromView | null>(null);
+  const [repoView, setRepoView] = useState<RepoView | null>(null);
+  const [volumeView, setVolumeView] = useState<VolumeView | null>(null);
   const [date, setDate] = useState<RangePickerValue>([moment().subtract(1, 'day'), moment()]);
   const [activeDateText, setActiveDateText] = useState<DayKey | ''>('yesterday');
   const optionsList: IOptionsWithKey[] = useMemo(

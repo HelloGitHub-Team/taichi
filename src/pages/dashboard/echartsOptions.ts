@@ -1,6 +1,5 @@
 import moment from 'moment';
 import echarts from 'echarts';
-import { isEmptyObject } from '@/utils/helper';
 
 import EChartsResponsiveOption = echarts.EChartsResponsiveOption;
 import EChartOption = echarts.EChartOption;
@@ -58,13 +57,16 @@ interface IData {
 }
 
 export type IEchartsOption = EChartOption | EChartsResponsiveOption;
-const processFromViewOptions = (fromView: FromView | {}): IEchartsOption => {
+const processFromViewOptions = (fromView: FromView | null): IEchartsOption => {
   let copyData: IData[] = [];
-  if (!isEmptyObject(fromView)) {
-    copyData = (fromView as FromView).data.map(item => ({
+  if (fromView) {
+    copyData = fromView.data.map(item => ({
       name: item.referrer,
       value: item.count,
     }));
+  }
+  if (copyData.length === 0) {
+    return {};
   }
   return {
     tooltip: {
@@ -95,12 +97,12 @@ const processFromViewOptions = (fromView: FromView | {}): IEchartsOption => {
     ],
   };
 };
-const processRepoViewOptions = (repoView: RepoView | {}): IEchartsOption => {
+const processRepoViewOptions = (repoView: RepoView | null): IEchartsOption => {
   let counts: number[] = [];
   let ipCounts: number[] = [];
   let timestamps: string[] = [];
-  if (!isEmptyObject(repoView)) {
-    const repoViewData = (repoView as RepoView).data;
+  if (repoView) {
+    const repoViewData = repoView.data;
     counts = repoViewData.map(data => data.count);
     ipCounts = repoViewData.map(data => data.ip_count);
     timestamps = repoViewData.map(data =>
@@ -190,15 +192,18 @@ interface IVolumeViewData {
   type: string;
 }
 
-const processVolumeView = (volumeView: VolumeView | {}): IEchartsOption => {
+const processVolumeView = (volumeView: VolumeView | null): IEchartsOption => {
   let volumeViewData: IVolumeViewData[] = [];
-  if (!isEmptyObject(volumeView)) {
-    const volumeDataTemp = (volumeView as VolumeView).data;
+  if (volumeView) {
+    const volumeDataTemp = volumeView.data;
     volumeViewData = volumeDataTemp.map(data => ({
       name: data.category_name,
       data: [data.count],
       type: 'bar',
     }));
+  }
+  if (volumeViewData.length === 0) {
+    return {};
   }
   return {
     tooltip: {
