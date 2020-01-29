@@ -16,9 +16,9 @@ const routes: IRoute[] = [
         component: './dashboard/Statistics',
       },
       {
-        path: '/detail/:type',
-        name: '统计详情',
-        component: './dashboard/Detail',
+        path: '/detail/from',
+        name: '统计来源详情',
+        component: './dashboard/FromDetail',
         hideInMenu: true,
       },
       {

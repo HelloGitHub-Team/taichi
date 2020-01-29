@@ -18,6 +18,7 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   loading?: boolean;
   collapsed: boolean;
 }
+
 const ChartWrapper: FC<IProps> = ({
   className,
   height,

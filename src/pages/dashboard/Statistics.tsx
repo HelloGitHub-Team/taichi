@@ -38,9 +38,9 @@ const Statistics = () => {
   const [activeDateText, setActiveDateText] = useState<DayKey | ''>('yesterday');
   const optionsList: IOptionsWithKey[] = useMemo(
     () => [
-      { key: 'formView', options: processFromViewOptions(fromView), title: '统计来源' },
-      { key: 'repoView', options: processRepoViewOptions(repoView), title: '推荐项目点击数据' },
-      { key: 'volumeView', options: processVolumeView(volumeView), title: '月刊' },
+      { key: 'from', options: processFromViewOptions(fromView), title: '统计来源' },
+      { key: 'click', options: processRepoViewOptions(repoView), title: '推荐项目点击数据' },
+      { key: 'period', options: processVolumeView(volumeView), title: '月刊' },
     ],
     [fromView, repoView, volumeView],
   );
