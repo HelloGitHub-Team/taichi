@@ -59,7 +59,7 @@ const ChartWrapper: FC<IProps> = ({
   }, [collapsed]);
   const elementStyle = { height, width, ...style };
   return (
-    <Spin spinning={loading} tip="加载中...">
+    <Spin spinning={loading}>
       {isEmptyObject(options) ? (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       ) : (
