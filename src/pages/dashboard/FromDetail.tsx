@@ -51,6 +51,7 @@ const FromDetail = () => {
         <ChartWrapper height={400} options={options} />
       </Card>
       <Card className={styles.card} title="用户访问来源详细数据" bordered={false}>
+        {/* 表格需要的功能：1. 分页(跳转页码，总条数，切换页码时携带查询条件) 2. 搜索 3. 排序 */}
         <Table dataSource={dataSource} columns={columns} />
       </Card>
     </PageHeaderWrapper>
