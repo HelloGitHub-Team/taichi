@@ -7,6 +7,7 @@ import request from '@/http/axiosRequest';
 import ChartWrapper from '@/components/ChartWrapper/ChartWrapper';
 import { Datum, processFromDetailOptions, RootObject } from '@/pages/dashboard/detailOptions';
 import { columns } from '@/pages/dashboard/detailColumns';
+import useFormTable, { IPageKey } from '@/customHooks/useFormTable/useFormTable';
 
 interface IDataSource {
   start_time: number;
@@ -27,23 +28,22 @@ interface IDataSourceDatum {
   percent: number;
 }
 
+const getViewTableData = (pageKey: IPageKey) =>
+  request<any, IDataSource>({ ...fetchFromDetail, ...pageKey }).then(response => ({
+    total: response.payload.page_count,
+    list: response.payload.data,
+  }));
 const FromDetail = () => {
   const [optionsOrigin, setOptionsOrigin] = useState<Datum[]>([]);
-  const [dataSource, setDataSource] = useState<IDataSourceDatum[]>([]);
+  const { tableProps } = useFormTable(getViewTableData);
   const getViewOptions = () => {
     request<IHomeViewParams, RootObject>({ ...fetchFromView }).then(response => {
       setOptionsOrigin(response.payload.data);
     });
   };
-  const getViewTableData = () => {
-    request<any, IDataSource>({ ...fetchFromDetail }).then(response => {
-      setDataSource(response.payload.data);
-    });
-  };
   const options = useMemo(() => processFromDetailOptions(optionsOrigin), [optionsOrigin]);
   useEffect(() => {
     getViewOptions();
-    getViewTableData();
   }, []);
   return (
     <PageHeaderWrapper className={styles.staticsDetail}>
@@ -52,7 +52,7 @@ const FromDetail = () => {
       </Card>
       <Card className={styles.card} title="用户访问来源详细数据" bordered={false}>
         {/* 表格需要的功能：1. 分页(跳转页码，总条数，切换页码时携带查询条件) 2. 搜索 3. 排序 */}
-        <Table dataSource={dataSource} columns={columns} />
+        <Table {...tableProps} columns={columns} />
       </Card>
     </PageHeaderWrapper>
   );
