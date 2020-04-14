@@ -27,6 +27,9 @@ package-lock.json
 functions/*
 .temp/**
 
+# private information
+/src/secretKeys.ts
+
 # umi
 .umi
 .umi-production

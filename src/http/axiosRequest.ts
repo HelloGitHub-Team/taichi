@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { message } from 'antd';
 import { CodeMessage, RequestConfig, ResponseData } from '@/http/requestTypes';
+import { token } from '@/secretKeys';
 
 const STATUS_OK = 200;
 const codeMessage: CodeMessage = {
@@ -27,9 +28,9 @@ const axiosInstance = axios.create({
 });
 axiosInstance.interceptors.request.use(
   config => {
-    // 开发环境下通过头部信息请求接口;
+    // 开发环境下通过头部信息请求接口
     if (NODE_ENV === 'development') {
-      config.headers['X-HG-TOKEN'] = 'B3jdAmOJJ4JHDxeiSttSOvLkf/6IIjhK';
+      config.headers['X-HG-TOKEN'] = token;
     }
     return config;
   },
