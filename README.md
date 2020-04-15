@@ -7,7 +7,14 @@ HG 可视化前端项目
 项目使用`ant-design-pro`进行搭建，技术栈如下：  
 `react + typescript + dva + umi + CSS module`
 
-参与开发：
+### 参与开发
+
+> **Tips :**
+>
+> - 启动时[去掉了`umi ui`可视化编程辅助工具](https://github.com/ant-design/ant-design-pro/issues/5411)
+> - 开启了`DllPlugin`打包优化，如果启动[发现问题](https://github.com/ant-design/ant-design-pro/issues/4665)可以关闭
+
+#### 项目启动
 
 ```shell script
 # 克隆代码
@@ -18,12 +25,31 @@ cd taichi
 yarn install
 # 启动项目
 yarn start
+# 项目打包
+yarn build
+# 将打包文件压缩并且放到mac电脑桌面
+yarn build:zip
 ```
 
-> **Tips :**
->
-> - 启动时[去掉了`umi ui`可视化编程辅助工具](https://github.com/ant-design/ant-design-pro/issues/5411)
-> - 开启了`DllPlugin`打包优化，如果启动[发现问题](https://github.com/ant-design/ant-design-pro/issues/4665)可以关闭
+#### 设置`token`
+
+在开发时，要在本地存储`token`并根据是否为开发环境进行引入，具体的`token`可以向管理员询问。
+
+需要在`src`下新建`secretKeys.ts`来存放`token`：
+
+```typescript jsx
+// secretKeys.ts
+
+// 导出token
+export const token = 'xxx-xxx';
+```
+
+> 之后的一些私有配置也可以放进来
+
+在开发开发环境引入`token`:
+
+```typescript jsx
+```
 
 ## 项目目录结构
 

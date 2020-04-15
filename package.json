@@ -6,9 +6,9 @@
   "scripts": {
     "start": "cross-env UMI_UI=none umi dev",
     "start:no-mock": "cross-env MOCK=none UMI_UI=none umi dev",
-    "analyze": "cross-env ANALYZE=1 umi build",
     "build": "umi build",
     "build:zip": "sh ./buildToDestop.sh",
+    "analyze": "cross-env ANALYZE=1 umi build",
     "deploy": "yarn build && NODE_DEBUG=gh-pages gh-pages -d dist && rm -rf dist",
     "format-imports": "cross-env import-sort --write '**/*.{js,jsx,ts,tsx}'",
     "lint": "yarn lint:js && yarn lint:style && yarn lint:prettier",
