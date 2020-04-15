@@ -44,9 +44,11 @@ export const token = 'xxx-xxx';
 
 > 之后的一些私有配置也可以放进来管理
 
-存放`token`的文件已在`.gitignore`文件中忽略： ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/20200415173023.png)
+存放`token`的文件已在`.gitignore`文件中忽略：  
+![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/20200415173849.png)
 
-在开发时，要在本地存储`token`并根据是否为开发环境进行引入，具体的`token`可以向管理员询问。 ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/20200415173048.png)
+在开发时，要在本地存储`token`并根据是否为开发环境进行引入，具体的`token`可以向管理员询问。  
+ ![](https://raw.githubusercontent.com/wangkaiwd/drawing-bed/master/20200415173048.png)
 
 ## 项目目录结构
 
