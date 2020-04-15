@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { message } from 'antd';
 import { CodeMessage, RequestConfig, ResponseData } from '@/http/requestTypes';
-import { token } from '@/secretKeys';
 
 const STATUS_OK = 200;
 const codeMessage: CodeMessage = {
@@ -22,6 +21,7 @@ const codeMessage: CodeMessage = {
   504: '网关超时。',
 };
 const { MOCK, NODE_ENV } = process.env;
+const isDevelopment = NODE_ENV === 'development';
 const axiosInstance = axios.create({
   timeout: 10000,
   baseURL: MOCK ? '' : 'https://hellogithub.com',
@@ -29,8 +29,9 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   config => {
     // 开发环境下通过头部信息请求接口
-    if (NODE_ENV === 'development') {
-      config.headers['X-HG-TOKEN'] = token;
+    if (isDevelopment) {
+      // eslint-disable-next-line global-require
+      config.headers['X-HG-TOKEN'] = require('@/secretKeys').token;
     }
     return config;
   },
