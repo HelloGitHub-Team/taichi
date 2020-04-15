@@ -51,8 +51,6 @@ yarn start
 │   │   └── styles                  # 全局通用样式
 │   ├── components                  # 业务通用组件
 │   │   ├── GlobalHeader
-│   │   ├── HeaderDropdown
-│   │   ├── HeaderSearch
 │   │   └── PageLoading
 │   ├── global.less                 # 全局样式
 │   ├── global.tsx                  # 全局 ts
@@ -82,7 +80,6 @@ yarn start
 │       └── helper.ts
 ├── tsconfig.json                   # ts 配置文件
 └── yarn.lock                       # yarn 锁定依赖版本文件
-
 ```
 
 ## 接口

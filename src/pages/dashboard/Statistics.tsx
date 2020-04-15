@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { Card, DatePicker } from 'antd';
+import { Card, DatePicker, Icon, message } from 'antd';
 import cls from 'classnames';
 import { RangePickerValue } from 'antd/lib/date-picker/interface';
 import moment from 'moment';
-import { message } from 'antd/es';
+import { Link } from 'umi';
 import styles from './Statistics.less';
 import ChartWrapper from '@/components/ChartWrapper/ChartWrapper';
 import {
@@ -17,29 +17,30 @@ import {
   RootObject,
   VolumeView,
 } from '@/pages/dashboard/echartsOptions';
-import { fetchHomeView, IHomeViewParams } from '@/services/Statistics';
+import { fetchHomeView, IHomeViewParams } from '@/services/statistics';
 import request from '@/http/axiosRequest';
 import { DATE_TEXT_MAP, DayKey } from '@/pages/dashboard/timeConfig';
 
 const { RangePicker } = DatePicker;
 
 interface IOptionsWithKey {
-  key: number;
+  key: string;
   options: IEchartsOption;
+  title: string;
 }
 
 const Statistics = () => {
   const [loading, setLoading] = useState(true);
-  const [fromView, setFromView] = useState<FromView | {}>({});
-  const [repoView, setRepoView] = useState<RepoView | {}>({});
-  const [volumeView, setVolumeView] = useState<VolumeView | {}>({});
+  const [fromView, setFromView] = useState<FromView | null>(null);
+  const [repoView, setRepoView] = useState<RepoView | null>(null);
+  const [volumeView, setVolumeView] = useState<VolumeView | null>(null);
   const [date, setDate] = useState<RangePickerValue>([moment().subtract(1, 'day'), moment()]);
   const [activeDateText, setActiveDateText] = useState<DayKey | ''>('yesterday');
   const optionsList: IOptionsWithKey[] = useMemo(
     () => [
-      { key: 1, options: processFromViewOptions(fromView) },
-      { key: 2, options: processRepoViewOptions(repoView) },
-      { key: 3, options: processVolumeView(volumeView) },
+      { key: 'from', options: processFromViewOptions(fromView), title: '统计来源' },
+      { key: 'click', options: processRepoViewOptions(repoView), title: '推荐项目点击数据' },
+      { key: 'period', options: processVolumeView(volumeView), title: '月刊' },
     ],
     [fromView, repoView, volumeView],
   );
@@ -108,10 +109,21 @@ const Statistics = () => {
       <RangePicker value={date} className={styles.rangeDatePicker} onChange={onChangeDate} />
     </Fragment>
   );
+  const extra = (item: IOptionsWithKey) => (
+    <Link className={styles.detail} to={`/detail/${item.key}`}>
+      <span>详情</span> <Icon className={styles.right} type="right" />
+    </Link>
+  );
   return (
     <PageHeaderWrapper className={styles.statistics} content={mainSearch}>
       {optionsList.map(item => (
-        <Card className={styles.card} bordered={false} key={item.key}>
+        <Card
+          title={item.title}
+          extra={extra(item)}
+          className={styles.card}
+          bordered={false}
+          key={item.key}
+        >
           <ChartWrapper loading={loading} height="400px" options={item.options} />
         </Card>
       ))}

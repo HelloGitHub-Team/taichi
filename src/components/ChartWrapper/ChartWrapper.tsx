@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import echarts from 'echarts';
-import { Spin } from 'antd';
+import { Spin, Empty } from 'antd';
 import { connect } from 'dva';
 import _uniqueId from 'lodash/uniqueId';
 import styles from './ChartWrapper.less';
 import { ConnectState } from '@/models/connect';
+import { isEmptyObject } from '@/utils/helper';
 
 import EChartsResponsiveOption = echarts.EChartsResponsiveOption;
 import EChartOption = echarts.EChartOption;
@@ -18,6 +19,7 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   loading?: boolean;
   collapsed: boolean;
 }
+
 const ChartWrapper: FC<IProps> = ({
   className,
   height,
@@ -38,29 +40,35 @@ const ChartWrapper: FC<IProps> = ({
     }, 70);
   };
   useEffect(() => {
-    const chartWrapper = document.querySelector(`#${idRef.current}`);
-    chartRef.current = echarts.init(chartWrapper as HTMLDivElement);
+    if (isEmptyObject(options)) return undefined;
+    if (!chartRef.current) {
+      const chartWrapper = document.querySelector(`#${idRef.current}`);
+      chartRef.current = echarts.init(chartWrapper as HTMLDivElement);
+    }
     chartRef.current.setOption(options);
     window.addEventListener('resize', onResize);
     return () => {
       window.removeEventListener('resize', onResize);
     };
-  }, []);
+  }, [options]);
   useEffect(() => {
+    if (isEmptyObject(options)) return;
     setTimeout(() => {
       chartRef.current.resize();
     }, 200);
   }, [collapsed]);
-  useEffect(() => {
-    chartRef.current.setOption(options);
-  }, [options]);
+  const elementStyle = { height, width, ...style };
   return (
     <Spin spinning={loading}>
-      <div
-        id={idRef.current}
-        className={classNames(className, styles.chartWrapper)}
-        style={{ height, width, ...style }}
-      />
+      {isEmptyObject(options) ? (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      ) : (
+        <div
+          id={idRef.current}
+          className={classNames(className, styles.chartWrapper)}
+          style={elementStyle}
+        />
+      )}
     </Spin>
   );
 };

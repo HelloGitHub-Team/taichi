@@ -7,9 +7,19 @@ const routes: IRoute[] = [
     routes: [
       {
         path: '/',
+        redirect: '/statistics',
+      },
+      {
+        path: '/statistics',
         name: '统计',
         icon: 'area-chart',
         component: './dashboard/Statistics',
+      },
+      {
+        path: '/detail/from',
+        name: '统计来源详情',
+        component: './dashboard/FromDetail',
+        hideInMenu: true,
       },
       {
         component: './user/404',

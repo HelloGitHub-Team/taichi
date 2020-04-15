@@ -48,7 +48,7 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(response);
   },
   error => {
-    const { status } = error.response;
+    const { status } = error.response || {};
     if (codeMessage[status]) {
       message.error(codeMessage[status]);
     } else {

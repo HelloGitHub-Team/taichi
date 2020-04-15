@@ -2,7 +2,7 @@
 @import '~@/assets/styles/_vars.less';
 .statistics {
   .rangeDatePicker {
-    margin-left: @margin-lg;
+    margin-left: @space-lg;
   }
   .searchTextWrapper {
     display: inline-block;
@@ -14,9 +14,21 @@
     }
   }
   .searchText + .searchText {
-    margin-left: @margin-lg;
+    margin-left: @space-lg;
   }
   .card + .card {
-    margin-top: @padding-lg;
+    margin-top: @space-lg;
+  }
+  .detail {
+    display: flex;
+    align-items: center;
+    color: @text-color;
+    &:hover {
+      color: @primary-color;
+    }
+  }
+  .right {
+    margin-left: @space-xxs;
+    vertical-align: top;
   }
 }
