@@ -14,9 +14,7 @@ interface IOptions {
 
 interface XXX<T = any> {
   tableProps: TableProps<T>;
-  // loading: boolean;
-  // submit: () => void;
-  // reset: () => void;
+  // search: { submit: () => void, reset: () => void }
 }
 
 export interface IPageKey {
@@ -31,12 +29,10 @@ interface IResponseData<T = any> {
 
 export type GetTableData<T = any> = ({ current, pageSize }: IPageKey) => Promise<IResponseData<T>>;
 const useFormTable = <T = any>(getTableData: GetTableData<T>, options: IOptions = {}): XXX<T> => {
-  const { pagination = {} } = options;
-  const { defaultCurrent = 10, defaultPageSize = 10 } = pagination;
   const [loading, setLoading] = useState(false);
   const [pageKey, setPageKey] = useState<IPageKey>({
-    current: pagination.current || defaultCurrent,
-    pageSize: pagination.pageSize || defaultPageSize,
+    current: 1,
+    pageSize: 10,
   });
   const [total, setTotal] = useState(0);
   const [dataSource, setDataSource] = useState<T[]>([]);
@@ -53,18 +49,25 @@ const useFormTable = <T = any>(getTableData: GetTableData<T>, options: IOptions 
       });
   };
   const onChange = (current: number, pageSize?: number) => {
-    setPageKey({ current, pageSize: pageSize || pageKey.pageSize });
+    const size = pageSize || pageKey.pageSize;
+    setPageKey({ current, pageSize: size });
   };
-
+  const onShowSizeChange = (current: number, size: number) => {
+    setPageKey({ current, pageSize: size });
+  };
   useEffect(() => {
     getTableDataWithLoading(pageKey);
   }, [pageKey]);
   return {
     tableProps: {
-      ...options,
       pagination: {
+        hideOnSinglePage: true,
+        showQuickJumper: true,
+        showSizeChanger: true,
         ...pageKey,
+        ...options.pagination,
         onChange,
+        onShowSizeChange,
         total,
         showTotal: () => `总共${total}条数据`,
       },

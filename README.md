@@ -37,9 +37,6 @@ yarn start
 │   └── router.config.ts            # umi 项目路由配置文件
 ├── jsconfig.json                   # js 配置文件与tsconfig.json类似
 ├── mock                            # umi 接口数据mock目录
-│   ├── notices.ts
-│   ├── route.ts
-│   └── user.ts
 ├── package.json                    # npm 相关配置文件
 ├── public
 │   ├── favicon.png                 # 网站图标
