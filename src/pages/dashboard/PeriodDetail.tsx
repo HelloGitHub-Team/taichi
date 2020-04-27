@@ -5,7 +5,7 @@ import styles from './Detail.less';
 import { fetchFromDetail, fetchFromView, IHomeViewParams } from '@/services/statistics';
 import request from '@/http/axiosRequest';
 import ChartWrapper from '@/components/ChartWrapper/ChartWrapper';
-import { Datum, processFromDetailOptions, RootObject } from '@/pages/dashboard/detailOptions';
+import { Datum, processFromDetailOptions, RootObject } from '@/pages/dashboard/fromDetailOptions';
 import { columns } from '@/pages/dashboard/detailColumns';
 import useFormTable, { IPageKey } from '@/customHooks/useFormTable/useFormTable';
 

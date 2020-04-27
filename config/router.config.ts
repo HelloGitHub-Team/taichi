@@ -22,6 +22,18 @@ const routes: IRoute[] = [
         hideInMenu: true,
       },
       {
+        path: '/detail/click',
+        name: '统计来源详情',
+        component: './dashboard/ClickDetail',
+        hideInMenu: true,
+      },
+      {
+        path: '/detail/period',
+        name: '统计来源详情',
+        component: './dashboard/PeriodDetail',
+        hideInMenu: true,
+      },
+      {
         component: './user/404',
       },
     ],
