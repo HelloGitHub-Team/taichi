@@ -62,8 +62,11 @@ const Statistics = () => {
       {
         key: 'period',
         options: processVolumeView(volumeView),
-        total: [{ num: volumeView?.all_count, name: '总项目数' }],
-        title: '月刊',
+        total: [
+          { num: volumeView?.all_count, name: '总点击数' },
+          { num: volumeView?.all_ip_count, name: '总IP数' },
+        ],
+        title: `第 ${volumeView?.volume_name || '-'} 期月刊数据`,
       },
     ],
     [fromView, repoView, volumeView],
