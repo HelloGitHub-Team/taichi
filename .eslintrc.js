@@ -5,5 +5,6 @@ module.exports = {
   },
   rules: {
     'no-param-reassign': ['error', { props: false }],
+    '@typescript-eslint/camelcase': 0,
   },
 };

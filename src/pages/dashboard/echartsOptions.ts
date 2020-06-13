@@ -128,9 +128,6 @@ const processRepoViewOptions = (repoView: RepoView | null): IEchartsOption => {
       type: 'category',
       boundaryGap: false,
       data: timestamps,
-      axisTick: {
-        show: true,
-      },
       axisLine: {
         lineStyle: {
           color: '#bfbfbf',
@@ -145,30 +142,32 @@ const processRepoViewOptions = (repoView: RepoView | null): IEchartsOption => {
         lineHeight: 18,
       },
     },
-    yAxis: {
-      type: 'value',
-      axisTick: {
-        show: false,
-      },
-      axisLine: {
-        show: false,
-      },
-      splitLine: {
-        lineStyle: {
-          type: 'dashed',
-          color: '#ebebeb',
+    yAxis: [
+      {
+        type: 'value',
+        name: '点击数量',
+        axisLine: {
+          lineStyle: {
+            color: '#d48265',
+          },
         },
       },
-      axisLabel: {
-        color: '#5b5b5b',
+      {
+        type: 'value',
+        name: 'IP数量',
+        axisLine: {
+          lineStyle: {
+            color: '#749f83',
+          },
+        },
       },
-    },
+    ],
     series: [
       {
         name: '点击数量',
         type: 'line',
-        stack: '总量',
         data: counts,
+        yAxisIndex: 0,
         itemStyle: {
           color: '#d48265',
         },
@@ -176,8 +175,8 @@ const processRepoViewOptions = (repoView: RepoView | null): IEchartsOption => {
       {
         name: 'IP数量',
         type: 'line',
-        stack: '总量',
         data: ipCounts,
+        yAxisIndex: 1,
         itemStyle: {
           color: '#749f83',
         },
