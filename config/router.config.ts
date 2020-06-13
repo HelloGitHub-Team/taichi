@@ -22,6 +22,12 @@ const routes: IRoute[] = [
         hideInMenu: true,
       },
       {
+        path: '/daily',
+        name: '日常汇总',
+        icon: 'area-chart',
+        component: './daily/Summary',
+      },
+      {
         component: './user/404',
       },
     ],

@@ -31,7 +31,7 @@ axiosInstance.interceptors.request.use(
     // 开发环境下通过头部信息请求接口
     if (isDevelopment) {
       // eslint-disable-next-line global-require
-      config.headers['X-HG-TOKEN'] = require('@/secretKeys').token;
+      config.headers['X-HG-TOKEN'] = require('../../secretKeys.ts').token;
     }
     return config;
   },
