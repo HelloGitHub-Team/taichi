@@ -118,39 +118,18 @@ const Statistics = () => {
   const fetchHomeData = (params: IHomeViewParams) => {
     setLoading(true);
     // 同时跑n个图表的接口
-    // const chartType: string[] = ['from', 'click', 'volume', 'notice'];
-    // for (const type of chartTypeMap) {
     chartTypeMap.forEach(type => fetchDataFun(type.key, params));
-    // fetchDataFun(type.key, params);
-    // }
     Promise.all(requestPromiseArr)
       .then(res => {
         if (res && res.length > 0) {
           res.forEach((data: any, index: number) => {
             chartTypeMap[index].fun(data.payload.view_data);
-            // const nameArr = chartType[index].split('')
-            // nameArr[0] = toUpper(nameArr[0])
-
-            // const funName: any = `set${nameArr.join('')}View`
-            // // 不要滥用 不要滥用 不要滥用eval
-            // eval(funName)(data.payload.view_data);
           });
         }
       })
       .finally(() => {
         setLoading(false);
       });
-    // request<IHomeViewParams, RootObject>({ ...fetchHomeView, params }).then(
-    //   response => {
-    //     setLoading(false);
-    //     setFromView(response.payload.from_view);
-    //     setRepoView(response.payload.repo_view);
-    //     setVolumeView(response.payload.volume_view);
-    //   },
-    //   () => {
-    //     setLoading(false);
-    //   },
-    // );
   };
   const handleRangeDate = ([startTime, endTime]: RangePickerValue) => {
     if (typeof startTime === 'undefined' || typeof endTime === 'undefined') {
