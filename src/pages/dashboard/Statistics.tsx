@@ -13,13 +13,15 @@ import {
   processFromViewOptions,
   processRepoViewOptions,
   processVolumeView,
+  processNoticeViewOptions,
   RepoView,
   RootObject,
   VolumeView,
 } from '@/pages/dashboard/echartsOptions';
-import { fetchHomeView, IHomeViewParams } from '@/services/statistics';
+import { fetchHomeView, IHomeViewParams, ChartFunctionMap } from '@/services/statistics';
 import request from '@/http/axiosRequest';
 import { DATE_TEXT_MAP, DayKey } from '@/pages/dashboard/timeConfig';
+// import { toUpper } from 'lodash';
 
 const { RangePicker } = DatePicker;
 
@@ -28,6 +30,7 @@ interface IOptionsWithKey {
   options: IEchartsOption;
   total: totalObj[];
   title: string;
+  loading: boolean;
 }
 
 interface totalObj {
@@ -36,10 +39,11 @@ interface totalObj {
 }
 
 const Statistics = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [fromView, setFromView] = useState<FromView | null>(null);
-  const [repoView, setRepoView] = useState<RepoView | null>(null);
+  const [repoView, setClickView] = useState<RepoView | null>(null);
   const [volumeView, setVolumeView] = useState<VolumeView | null>(null);
+  const [noticeView, setNoticeView] = useState<RepoView | null>(null);
   const [date, setDate] = useState<RangePickerValue>([moment().subtract(1, 'day'), moment()]);
   const [activeDateText, setActiveDateText] = useState<DayKey | ''>('yesterday');
   const optionsList: IOptionsWithKey[] = useMemo(
@@ -49,6 +53,7 @@ const Statistics = () => {
         options: processFromViewOptions(fromView),
         total: [{ num: fromView?.all_count, name: '总来源数' }],
         title: '统计来源',
+        loading: true,
       },
       {
         key: 'click',
@@ -58,6 +63,7 @@ const Statistics = () => {
           { num: repoView?.all_ip_count, name: '总IP数' },
         ],
         title: '推荐项目点击数据',
+        loading: true,
       },
       {
         key: 'period',
@@ -67,23 +73,84 @@ const Statistics = () => {
           { num: volumeView?.all_ip_count, name: '总IP数' },
         ],
         title: `第 ${volumeView?.volume_name || '-'} 期月刊数据`,
+        loading: true,
+      },
+      {
+        key: 'notice',
+        options: processNoticeViewOptions(noticeView),
+        total: [
+          { num: noticeView?.all_count, name: '总点击数' },
+          { num: noticeView?.all_ip_count, name: '总IP数' },
+        ],
+        title: '公告栏点击数',
+        loading: true,
       },
     ],
-    [fromView, repoView, volumeView],
+    [fromView, repoView, volumeView, noticeView],
   );
+
+  const requestPromiseArr: any = [];
+  const chartTypeMap: ChartFunctionMap[] = [
+    {
+      key: 'from',
+      fun: setFromView,
+    },
+    {
+      key: 'click',
+      fun: setClickView,
+    },
+    {
+      key: 'volume',
+      fun: setVolumeView,
+    },
+    {
+      key: 'notice',
+      fun: setNoticeView,
+    },
+  ];
+  const fetchDataFun = (type: string, params: IHomeViewParams) => {
+    // 防止直接对 prarms 做操作，接口请求的都是最后一个“notice”的 event,闭包？
+    const newParams: IHomeViewParams = { ...params };
+    newParams.event = type;
+    const p = request<IHomeViewParams, RootObject>({ ...fetchHomeView, params: newParams });
+    requestPromiseArr.push(p);
+  };
   const fetchHomeData = (params: IHomeViewParams) => {
     setLoading(true);
-    request<IHomeViewParams, RootObject>({ ...fetchHomeView, params }).then(
-      response => {
+    // 同时跑n个图表的接口
+    // const chartType: string[] = ['from', 'click', 'volume', 'notice'];
+    // for (const type of chartTypeMap) {
+    chartTypeMap.forEach(type => fetchDataFun(type.key, params));
+    // fetchDataFun(type.key, params);
+    // }
+    Promise.all(requestPromiseArr)
+      .then(res => {
+        if (res && res.length > 0) {
+          res.forEach((data: any, index: number) => {
+            chartTypeMap[index].fun(data.payload.view_data);
+            // const nameArr = chartType[index].split('')
+            // nameArr[0] = toUpper(nameArr[0])
+
+            // const funName: any = `set${nameArr.join('')}View`
+            // // 不要滥用 不要滥用 不要滥用eval
+            // eval(funName)(data.payload.view_data);
+          });
+        }
+      })
+      .finally(() => {
         setLoading(false);
-        setFromView(response.payload.from_view);
-        setRepoView(response.payload.repo_view);
-        setVolumeView(response.payload.volume_view);
-      },
-      () => {
-        setLoading(false);
-      },
-    );
+      });
+    // request<IHomeViewParams, RootObject>({ ...fetchHomeView, params }).then(
+    //   response => {
+    //     setLoading(false);
+    //     setFromView(response.payload.from_view);
+    //     setRepoView(response.payload.repo_view);
+    //     setVolumeView(response.payload.volume_view);
+    //   },
+    //   () => {
+    //     setLoading(false);
+    //   },
+    // );
   };
   const handleRangeDate = ([startTime, endTime]: RangePickerValue) => {
     if (typeof startTime === 'undefined' || typeof endTime === 'undefined') {
