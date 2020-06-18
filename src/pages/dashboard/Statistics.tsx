@@ -30,11 +30,10 @@ interface IOptionsWithKey {
   options: IEchartsOption;
   total: totalObj[];
   title: string;
-  loading: boolean;
 }
 
 interface totalObj {
-  num: number;
+  num: number | undefined;
   name: string;
 }
 
@@ -53,7 +52,6 @@ const Statistics = () => {
         options: processFromViewOptions(fromView),
         total: [{ num: fromView?.all_count, name: '总来源数' }],
         title: '统计来源',
-        loading: true,
       },
       {
         key: 'click',
@@ -63,7 +61,6 @@ const Statistics = () => {
           { num: repoView?.all_ip_count, name: '总IP数' },
         ],
         title: '推荐项目点击数据',
-        loading: true,
       },
       {
         key: 'period',
@@ -73,7 +70,6 @@ const Statistics = () => {
           { num: volumeView?.all_ip_count, name: '总IP数' },
         ],
         title: `第 ${volumeView?.volume_name || '-'} 期月刊数据`,
-        loading: true,
       },
       {
         key: 'notice',
@@ -83,7 +79,6 @@ const Statistics = () => {
           { num: noticeView?.all_ip_count, name: '总IP数' },
         ],
         title: '公告栏点击数',
-        loading: true,
       },
     ],
     [fromView, repoView, volumeView, noticeView],
