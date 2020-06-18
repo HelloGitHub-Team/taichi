@@ -3,6 +3,12 @@ import { AxiosRequestConfig } from 'axios';
 export interface IHomeViewParams {
   start_time?: number;
   end_time?: number;
+  event?: string;
+}
+
+export interface ChartFunctionMap {
+  key: string;
+  fun: (param: any) => void;
 }
 
 // 获取首页汇总展示数据

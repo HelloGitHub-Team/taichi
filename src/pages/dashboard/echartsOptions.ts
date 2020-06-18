@@ -6,10 +6,11 @@ import EChartOption = echarts.EChartOption;
 
 export interface RootObject {
   end_time: number;
-  from_view: FromView;
-  repo_view: RepoView;
+  view_data: FromView | RepoView | VolumeView;
+  // from_view: FromView;
+  // repo_view: RepoView;
   start_time: number;
-  volume_view: VolumeView;
+  // volume_view: VolumeView;
 }
 
 export interface VolumeView {
@@ -184,7 +185,93 @@ const processRepoViewOptions = (repoView: RepoView | null): IEchartsOption => {
     ],
   };
 };
-
+const processNoticeViewOptions = (noticeView: RepoView | null): IEchartsOption => {
+  let counts: number[] = [];
+  let ipCounts: number[] = [];
+  let timestamps: string[] = [];
+  if (noticeView) {
+    const noticeViewData = noticeView.data;
+    counts = noticeViewData.map(data => data.count);
+    ipCounts = noticeViewData.map(data => data.ip_count);
+    timestamps = noticeViewData.map(data =>
+      moment(data.timestamp * 1000).format('YYYY年 MM月DD日 HH:mm:ss'),
+    );
+  }
+  return {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        lineStyle: {
+          color: '#bfbfbf',
+        },
+      },
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true,
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: timestamps,
+      axisLine: {
+        lineStyle: {
+          color: '#bfbfbf',
+        },
+      },
+      axisLabel: {
+        color: '#5b5b5b',
+        formatter: (value: string) => {
+          const [, month, time] = value.split(' ');
+          return `${month}\n${time}`;
+        },
+        lineHeight: 18,
+      },
+    },
+    yAxis: [
+      {
+        type: 'value',
+        name: '点击数量',
+        axisLine: {
+          lineStyle: {
+            color: '#f0bf57',
+          },
+        },
+      },
+      {
+        type: 'value',
+        name: 'IP数量',
+        axisLine: {
+          lineStyle: {
+            color: '#466624',
+          },
+        },
+      },
+    ],
+    series: [
+      {
+        name: '点击数量',
+        type: 'line',
+        data: counts,
+        yAxisIndex: 0,
+        itemStyle: {
+          color: '#f5d769',
+        },
+      },
+      {
+        name: 'IP数量',
+        type: 'line',
+        data: ipCounts,
+        yAxisIndex: 1,
+        itemStyle: {
+          color: '#466624',
+        },
+      },
+    ],
+  };
+};
 interface IVolumeViewData {
   name: string;
   data: number[];
@@ -260,4 +347,9 @@ const processVolumeView = (volumeView: VolumeView | null): IEchartsOption => {
     series: volumeViewData,
   };
 };
-export { processFromViewOptions, processRepoViewOptions, processVolumeView };
+export {
+  processFromViewOptions,
+  processRepoViewOptions,
+  processVolumeView,
+  processNoticeViewOptions,
+};
