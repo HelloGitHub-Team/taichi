@@ -26,7 +26,13 @@ const { RangePicker } = DatePicker;
 interface IOptionsWithKey {
   key: string;
   options: IEchartsOption;
+  total: totalObj[];
   title: string;
+}
+
+interface totalObj {
+  num: number;
+  name: string;
 }
 
 const Statistics = () => {
@@ -38,9 +44,30 @@ const Statistics = () => {
   const [activeDateText, setActiveDateText] = useState<DayKey | ''>('yesterday');
   const optionsList: IOptionsWithKey[] = useMemo(
     () => [
-      { key: 'from', options: processFromViewOptions(fromView), title: '统计来源' },
-      { key: 'click', options: processRepoViewOptions(repoView), title: '推荐项目点击数据' },
-      { key: 'period', options: processVolumeView(volumeView), title: '月刊' },
+      {
+        key: 'from',
+        options: processFromViewOptions(fromView),
+        total: [{ num: fromView?.all_count, name: '总来源数' }],
+        title: '统计来源',
+      },
+      {
+        key: 'click',
+        options: processRepoViewOptions(repoView),
+        total: [
+          { num: repoView?.all_count, name: '总点击数' },
+          { num: repoView?.all_ip_count, name: '总IP数' },
+        ],
+        title: '推荐项目点击数据',
+      },
+      {
+        key: 'period',
+        options: processVolumeView(volumeView),
+        total: [
+          { num: volumeView?.all_count, name: '总点击数' },
+          { num: volumeView?.all_ip_count, name: '总IP数' },
+        ],
+        title: `第 ${volumeView?.volume_name || '-'} 期月刊数据`,
+      },
     ],
     [fromView, repoView, volumeView],
   );
@@ -125,6 +152,14 @@ const Statistics = () => {
           key={item.key}
         >
           <ChartWrapper loading={loading} height="400px" options={item.options} />
+          <div className={styles.totalSum}>
+            {item.total.map((sum: any) => (
+              <div key={sum.name}>
+                <div className={styles.totalNum}>{sum.num}</div>
+                <div className={styles.numName}>{sum.name}</div>
+              </div>
+            ))}
+          </div>
         </Card>
       ))}
     </PageHeaderWrapper>
