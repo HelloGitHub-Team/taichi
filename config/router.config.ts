@@ -28,6 +28,13 @@ const routes: IRoute[] = [
         component: './daily/Summary',
       },
       {
+        path: '/profile',
+        name: '个人首页',
+        icon: 'profile',
+        component: './profile/Home',
+        hideInMenu: true,
+      },
+      {
         component: './user/404',
       },
     ],
