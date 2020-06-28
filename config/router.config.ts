@@ -23,8 +23,8 @@ const routes: IRoute[] = [
       },
       {
         path: '/daily',
-        name: '日常汇总',
-        icon: 'area-chart',
+        name: '日报汇总',
+        icon: 'profile',
         component: './daily/Summary',
       },
       {
