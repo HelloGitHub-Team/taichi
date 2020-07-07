@@ -28,6 +28,13 @@ const routes: IRoute[] = [
         component: './daily/Summary',
       },
       {
+        path: '/detail',
+        name: '详情数据',
+        icon: 'area-chart',
+        component: './detail',
+        hideInMenu: true,
+      },
+      {
         component: './user/404',
       },
     ],
