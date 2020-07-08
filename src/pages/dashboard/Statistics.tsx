@@ -30,6 +30,7 @@ interface IOptionsWithKey {
   options: IEchartsOption;
   total: totalObj[];
   title: string;
+  loading?: boolean;
 }
 
 interface totalObj {
@@ -38,7 +39,7 @@ interface totalObj {
 }
 
 const Statistics = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
   const [fromView, setFromView] = useState<FromView | null>(null);
   const [repoView, setClickView] = useState<RepoView | null>(null);
   const [volumeView, setVolumeView] = useState<VolumeView | null>(null);
@@ -52,6 +53,7 @@ const Statistics = () => {
         options: processFromViewOptions(fromView),
         total: [{ num: fromView?.all_count, name: '总来源数' }],
         title: '统计来源',
+        loading: false,
       },
       {
         key: 'click',
@@ -61,15 +63,17 @@ const Statistics = () => {
           { num: repoView?.all_ip_count, name: '总IP数' },
         ],
         title: '推荐项目点击数据',
+        loading: false,
       },
       {
-        key: 'period',
+        key: 'volume',
         options: processVolumeView(volumeView),
         total: [
           { num: volumeView?.all_count, name: '总点击数' },
           { num: volumeView?.all_ip_count, name: '总IP数' },
         ],
         title: `第 ${volumeView?.volume_name || '-'} 期月刊数据`,
+        loading: false,
       },
       {
         key: 'notice',
@@ -79,12 +83,13 @@ const Statistics = () => {
           { num: noticeView?.all_ip_count, name: '总IP数' },
         ],
         title: '公告栏点击数',
+        loading: false,
       },
     ],
     [fromView, repoView, volumeView, noticeView],
   );
 
-  const requestPromiseArr: any = [];
+  // const requestPromiseArr: any = [];
   const chartTypeMap: ChartFunctionMap[] = [
     {
       key: 'from',
@@ -103,28 +108,42 @@ const Statistics = () => {
       fun: setNoticeView,
     },
   ];
-  const fetchDataFun = (type: string, params: IHomeViewParams) => {
+  const fetchDataFun = async (type: string, index: number, params: IHomeViewParams) => {
+    const typeObj: IOptionsWithKey | undefined = optionsList.find(item => item.key === type);
+    if (!typeObj) {
+      return;
+    }
+    typeObj.loading = true;
     // 防止直接对 prarms 做操作，接口请求的都是最后一个“notice”的 event,闭包？
     const newParams: IHomeViewParams = { ...params };
     newParams.event = type;
-    const p = request<IHomeViewParams, RootObject>({ ...fetchHomeView, params: newParams });
-    requestPromiseArr.push(p);
+    const data = await request<IHomeViewParams, RootObject>({
+      ...fetchHomeView,
+      params: newParams,
+    });
+    // requestPromiseArr.push(p);
+    chartTypeMap[index].fun(data.payload.view_data);
+    typeObj.loading = false;
   };
   const fetchHomeData = (params: IHomeViewParams) => {
-    setLoading(true);
+    // setLoading(true);
     // 同时跑n个图表的接口
-    chartTypeMap.forEach(type => fetchDataFun(type.key, params));
-    Promise.all(requestPromiseArr)
-      .then(res => {
-        if (res && res.length > 0) {
-          res.forEach((data: any, index: number) => {
-            chartTypeMap[index].fun(data.payload.view_data);
-          });
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    for (let i = 0; i < chartTypeMap.length; i += 1) {
+      const type = chartTypeMap[i].key;
+      fetchDataFun(type, i, params);
+    }
+    // chartTypeMap.forEach(type => fetchDataFun(type.key, params));
+    // Promise.all(requestPromiseArr)
+    //   .then(res => {
+    //     if (res && res.length > 0) {
+    //       res.forEach((data: any, index: number) => {
+    //         chartTypeMap[index].fun(data.payload.view_data);
+    //       });
+    //     }
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   };
   const handleRangeDate = ([startTime, endTime]: RangePickerValue) => {
     if (typeof startTime === 'undefined' || typeof endTime === 'undefined') {
@@ -192,7 +211,7 @@ const Statistics = () => {
           bordered={false}
           key={item.key}
         >
-          <ChartWrapper loading={loading} height="400px" options={item.options} />
+          <ChartWrapper loading={item.loading} height="400px" options={item.options} />
           <div className={styles.totalSum}>
             {item.total.map((sum: any) => (
               <div key={sum.name}>
