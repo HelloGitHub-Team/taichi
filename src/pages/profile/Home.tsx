@@ -1,9 +1,3 @@
-import React, { memo } from 'react'
+import React, { memo } from 'react';
 
-export default memo(function Home() {
-    return (
-        <div>
-            开发中
-        </div>
-    )
-})
+export default memo(() => <div>开发中</div>);

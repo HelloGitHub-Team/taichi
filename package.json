@@ -42,6 +42,8 @@
   "dependencies": {
     "@ant-design/colors": "^3.1.0",
     "@ant-design/pro-layout": "4.9.11",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/styled-components": "^5.1.0",
     "antd": "^3.23.6",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
@@ -55,8 +57,10 @@
     "react": "^16.8.6",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.6",
+    "react-router-dom": "^5.2.0",
     "redux": "^4.0.1",
     "slash2": "^2.0.0",
+    "styled-components": "^5.1.1",
     "umi": "^2.9.6",
     "umi-plugin-react": "^1.10.1",
     "webpack-theme-color-replacer": "^1.2.15"
