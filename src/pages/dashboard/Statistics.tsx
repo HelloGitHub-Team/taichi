@@ -173,8 +173,11 @@ const Statistics = () => {
   const handleGoUrl = (item: IOptionsWithKey) => {
     const key = item.key || '';
     switch (key) {
-      case 'click':
-        history.push('/detail');
+      case 'click': // 推荐项目
+        history.push(`/detail?key=${key}`);
+        break;
+      case 'volume': // 月刊
+        history.push(`/detail?key=${key}`);
         break;
       default:
     }
