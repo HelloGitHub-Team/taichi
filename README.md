@@ -7,6 +7,26 @@ HG 可视化前端项目。**想要加入的小伙伴请联系微信：xueweihan
 项目使用`ant-design-pro`进行搭建，技术栈如下：  
 `react + typescript + dva + umi + CSS module`
 
+### 分支管理
+
+#### 分支名规则
+
+```shell script
+feature || hotfix / 一个你能记住的名字 (名字使用小写英文并且使用 - 隔开)
+
+// 示例
+feature/personal-center
+hotfix/fix-homepage
+```
+
+#### 分支单一原则
+
+一个分支只能做一个需求的开发，不能将不同的需求放在同一个分支
+
+#### 控制分支数量
+
+完成需求且合并到 master 分支后，记得删除开发分支保证分支数量不会太多
+
 ### 参与开发
 
 > **Tips :**
