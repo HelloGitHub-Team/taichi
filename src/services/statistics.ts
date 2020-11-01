@@ -7,8 +7,10 @@ export interface IHomeViewParams {
 }
 
 export interface ChartFunctionMap {
+  index: number;
   key: string;
   fun: (param: any) => void;
+  loading?: boolean;
 }
 
 // 获取首页汇总展示数据

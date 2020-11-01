@@ -38,7 +38,7 @@ interface totalObj {
 }
 
 const Statistics = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<object>({});
   const [fromView, setFromView] = useState<FromView | null>(null);
   const [repoView, setClickView] = useState<RepoView | null>(null);
   const [volumeView, setVolumeView] = useState<VolumeView | null>(null);
@@ -84,47 +84,65 @@ const Statistics = () => {
     [fromView, repoView, volumeView, noticeView],
   );
 
-  const requestPromiseArr: any = [];
+  // const requestPromiseArr: any = [];
   const chartTypeMap: ChartFunctionMap[] = [
     {
+      index: 0,
       key: 'from',
+      loading: false,
       fun: setFromView,
     },
     {
+      index: 1,
       key: 'click',
+      loading: false,
       fun: setClickView,
     },
     {
+      index: 2,
       key: 'volume',
+      loading: false,
       fun: setVolumeView,
     },
     {
+      index: 3,
       key: 'notice',
+      loading: false,
       fun: setNoticeView,
     },
   ];
-  const fetchDataFun = (type: string, params: IHomeViewParams) => {
+  const fetchDataFun = async (item: ChartFunctionMap, params: IHomeViewParams) => {
     // 防止直接对 prarms 做操作，接口请求的都是最后一个“notice”的 event,闭包？
+    setLoading({
+      ...loading,
+      [item.key]: true,
+    });
     const newParams: IHomeViewParams = { ...params };
-    newParams.event = type;
-    const p = request<IHomeViewParams, RootObject>({ ...fetchHomeView, params: newParams });
-    requestPromiseArr.push(p);
+    newParams.event = item.key;
+    const p = await request<IHomeViewParams, RootObject>({ ...fetchHomeView, params: newParams });
+    // requestPromiseArr.push(p);
+    item.fun(p.payload.view_data);
+    setLoading({
+      ...loading,
+      [item.key]: false,
+    });
+    console.log(loading);
   };
   const fetchHomeData = (params: IHomeViewParams) => {
-    setLoading(true);
+    // setLoading(true);
     // 同时跑n个图表的接口
-    chartTypeMap.forEach(type => fetchDataFun(type.key, params));
-    Promise.all(requestPromiseArr)
-      .then(res => {
-        if (res && res.length > 0) {
-          res.forEach((data: any, index: number) => {
-            chartTypeMap[index].fun(data.payload.view_data);
-          });
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    chartTypeMap.forEach(item => fetchDataFun(item, params));
+    // Promise.all(requestPromiseArr)
+    //   .then(res => {
+    //     if (res && res.length > 0) {
+    //       res.forEach((data: any, index: number) => {
+    //         chartTypeMap[index].fun(data.payload.view_data);
+    //       });
+    //     }
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   };
   const handleRangeDate = ([startTime, endTime]: RangePickerValue) => {
     if (typeof startTime === 'undefined' || typeof endTime === 'undefined') {
@@ -192,7 +210,7 @@ const Statistics = () => {
           bordered={false}
           key={item.key}
         >
-          <ChartWrapper loading={loading} height="400px" options={item.options} />
+          <ChartWrapper loading={loading[item.key]} height="400px" options={item.options} />
           <div className={styles.totalSum}>
             {item.total.map((sum: any) => (
               <div key={sum.name}>
