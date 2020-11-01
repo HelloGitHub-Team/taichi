@@ -127,8 +127,8 @@ const Summary = () => {
       message.warning('请选择一个范围');
       return;
     }
-    if (startStamps !== moment(date[0]).unix()||endStamps !== moment(date[1]).unix()){
-      setChange(1)
+    if (startStamps !== moment(date[0]).unix() || endStamps !== moment(date[1]).unix()) {
+      setChange(1);
       setDate([startTime, endTime]);
     }
   };
@@ -148,12 +148,12 @@ const Summary = () => {
   };
 
   useEffect(() => {
-    const [startStamps, endStamps] = [moment(date[0]).unix(),moment(date[1]).unix()];
+    const [startStamps, endStamps] = [moment(date[0]).unix(), moment(date[1]).unix()];
     fetchCate({ start_time: startStamps, end_time: endStamps });
   }, []);
 
   useEffect(() => {
-    const [startStamps, endStamps] = [moment(date[0]).unix(),moment(date[1]).unix()];
+    const [startStamps, endStamps] = [moment(date[0]).unix(), moment(date[1]).unix()];
     fetchList({
       start_time: startStamps,
       end_time: endStamps,
@@ -165,11 +165,11 @@ const Summary = () => {
   }, [page, order, asc]);
 
   const clickSearch = () => {
-    const [startStamps, endStamps] = [moment(date[0]).unix(),moment(date[1]).unix()];
-    if(change===1){
+    const [startStamps, endStamps] = [moment(date[0]).unix(), moment(date[1]).unix()];
+    if (change === 1) {
       fetchCate({ start_time: startStamps, end_time: endStamps });
     }
-    if(page===1){
+    if (page === 1) {
       fetchList({
         start_time: startStamps,
         end_time: endStamps,
@@ -178,8 +178,8 @@ const Summary = () => {
         order,
         asc,
       });
-    }else{
-      setPage(1)
+    } else {
+      setPage(1);
     }
   };
 

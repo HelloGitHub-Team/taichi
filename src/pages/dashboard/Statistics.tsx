@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useMemo, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { Card, DatePicker, Icon, message } from 'antd';
 import cls from 'classnames';
 import { RangePickerValue } from 'antd/lib/date-picker/interface';
 import moment from 'moment';
-import { Link } from 'umi';
 import styles from './Statistics.less';
 import ChartWrapper from '@/components/ChartWrapper/ChartWrapper';
 import {
@@ -39,6 +39,7 @@ interface totalObj {
 }
 
 const Statistics = () => {
+  const history = useHistory();
   // const [loading, setLoading] = useState<boolean>(true);
   const [fromView, setFromView] = useState<FromView | null>(null);
   const [repoView, setClickView] = useState<RepoView | null>(null);
@@ -155,8 +156,12 @@ const Statistics = () => {
     return [startStamps, endStamps];
   };
   useEffect(() => {
+    const timeArray = [];
     const [startStamps, endStamps] = handleRangeDate(date);
     fetchHomeData({ start_time: startStamps, end_time: endStamps });
+    timeArray[0] = startStamps;
+    timeArray[1] = endStamps;
+    window.localStorage.setItem('selectedTime', JSON.stringify(timeArray));
   }, []);
   const onClickDateText = (key: DayKey) => {
     setActiveDateText(key);
@@ -171,13 +176,30 @@ const Statistics = () => {
 
   const onChangeDate = ([startTime, endTime]: RangePickerValue) => {
     const [startStamps, endStamps] = handleRangeDate([startTime, endTime] as RangePickerValue);
+    const timeArray = [];
     if (startStamps === endStamps) {
       message.warning('请选择一个范围');
       return;
     }
     setActiveDateText('');
     setDate([startTime, endTime] as RangePickerValue);
+    timeArray[0] = startTime;
+    timeArray[1] = endTime;
     fetchHomeData({ start_time: startStamps, end_time: endStamps });
+    window.localStorage.setItem('selectedTime', JSON.stringify(timeArray));
+  };
+
+  const handleGoUrl = (item: IOptionsWithKey) => {
+    const key = item.key || '';
+    switch (key) {
+      case 'click': // 推荐项目
+        history.push(`/detail?key=${key}`);
+        break;
+      case 'volume': // 月刊
+        history.push(`/detail?key=${key}`);
+        break;
+      default:
+    }
   };
   const mainSearch = (
     <Fragment>
@@ -197,9 +219,10 @@ const Statistics = () => {
     </Fragment>
   );
   const extra = (item: IOptionsWithKey) => (
-    <Link className={styles.detail} to={`/detail/${item.key}`}>
-      <span>详情</span> <Icon className={styles.right} type="right" />
-    </Link>
+    <div className={styles.detail}>
+      <span onClick={() => handleGoUrl(item)}>详情</span>{' '}
+      <Icon className={styles.right} type="right" />
+    </div>
   );
   return (
     <PageHeaderWrapper className={styles.statistics} content={mainSearch}>
