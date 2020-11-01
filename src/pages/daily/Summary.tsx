@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { Card, DatePicker, Table, Select, Button } from 'antd';
+import { Card, DatePicker, Table, Select, Button, message } from 'antd';
 import moment from 'moment';
 import { RangePickerValue } from 'antd/lib/date-picker/interface';
 import { PaginationConfig, SorterResult, ColumnProps } from 'antd/lib/table/interface';
@@ -70,12 +70,12 @@ const Summary = () => {
       width: 100,
     },
     {
-      title: '更新时间',
+      title: '最近一次更新',
       dataIndex: 'repo_pushed_time',
       sorter: true,
       sortDirections: ['descend', 'ascend'],
-      render: (time: number) => moment.unix(time).format('YYYY-MM-DD'),
-      width: 130,
+      render: (time: number) => moment.unix(time).fromNow(),
+      width: 150,
     },
   ];
 
@@ -88,11 +88,13 @@ const Summary = () => {
   const [count, setCount] = useState<number>(0);
   const [order, setOrder] = useState('stars');
   const [asc, setAsc] = useState<Asc>(0);
+  const [change, setChange] = useState<number>(0);
 
   const fetchCate = (params: LangsClassParams) => {
     request<LangsClassParams>({ ...fetchLangsClass, params }).then(
       response => {
         setCate(['ALL'].concat(response.payload.langs));
+        setChange(0);
       },
       () => {
         setLoading(false);
@@ -116,13 +118,19 @@ const Summary = () => {
 
   const handleRangeDate = ([startTime, endTime]: RangePickerValue) => {
     if (typeof startTime === 'undefined' || typeof endTime === 'undefined') {
-      return [];
+      return;
     }
     const dateSetFormat = { hour: 0, minute: 0, second: 0 };
     const startStamps: number = startTime.set(dateSetFormat).unix();
     const endStamps: number = endTime.set(dateSetFormat).unix();
-    setDate([startTime, endTime]);
-    return [startStamps, endStamps];
+    if (startStamps === endStamps) {
+      message.warning('请选择一个范围');
+      return;
+    }
+    if (startStamps !== moment(date[0]).unix() || endStamps !== moment(date[1]).unix()) {
+      setChange(1);
+      setDate([startTime, endTime]);
+    }
   };
 
   const handleChange = (value: string) => {
@@ -140,12 +148,12 @@ const Summary = () => {
   };
 
   useEffect(() => {
-    const [startStamps, endStamps] = handleRangeDate(date);
+    const [startStamps, endStamps] = [moment(date[0]).unix(), moment(date[1]).unix()];
     fetchCate({ start_time: startStamps, end_time: endStamps });
   }, []);
 
   useEffect(() => {
-    const [startStamps, endStamps] = handleRangeDate(date);
+    const [startStamps, endStamps] = [moment(date[0]).unix(), moment(date[1]).unix()];
     fetchList({
       start_time: startStamps,
       end_time: endStamps,
@@ -157,16 +165,22 @@ const Summary = () => {
   }, [page, order, asc]);
 
   const clickSearch = () => {
-    const [startStamps, endStamps] = handleRangeDate(date);
-    fetchCate({ start_time: startStamps, end_time: endStamps });
-    fetchList({
-      start_time: startStamps,
-      end_time: endStamps,
-      lang: lang === 'ALL' ? '' : lang,
-      page,
-      order,
-      asc,
-    });
+    const [startStamps, endStamps] = [moment(date[0]).unix(), moment(date[1]).unix()];
+    if (change === 1) {
+      fetchCate({ start_time: startStamps, end_time: endStamps });
+    }
+    if (page === 1) {
+      fetchList({
+        start_time: startStamps,
+        end_time: endStamps,
+        lang: lang === 'ALL' ? '' : lang,
+        page,
+        order,
+        asc,
+      });
+    } else {
+      setPage(1);
+    }
   };
 
   return (
@@ -174,9 +188,8 @@ const Summary = () => {
       <Card>
         <div className={styles.search}>
           <RangePicker
-            showTime
             onChange={handleRangeDate}
-            defaultValue={date}
+            value={date}
             format="YYYY-MM-DD"
             allowClear={false}
           />
